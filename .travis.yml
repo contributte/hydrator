@@ -10,7 +10,7 @@ install:
 
 script:
   # Tests
-  - composer run-script phpunit
+  - composer run-script test
 
 jobs:
   include:
