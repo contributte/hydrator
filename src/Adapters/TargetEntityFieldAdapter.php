@@ -14,11 +14,11 @@ class TargetEntityFieldAdapter implements IFieldAdapter {
 		$this->em = $em;
 	}
 
-	public function isWorkable(string $field, Metadata $metadata, array $settings): bool {
+	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
 		return isset($metadata->getMapping($field)['targetEntity']);
 	}
 
-	public function work(string $field, $value, Metadata $metadata, array $settings) {
+	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
 		$targetEntity = $metadata->getMapping($field)['targetEntity'];
 
 		if ($value instanceof $targetEntity) {

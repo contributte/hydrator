@@ -6,11 +6,11 @@ use WebChemistry\DoctrineHydration\Metadata;
 
 class CallbackFieldAdapter implements IFieldAdapter {
 
-	public function isWorkable(string $field, Metadata $metadata, array $settings): bool {
+	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
 		return isset($settings['callbacks'][$field]);
 	}
 
-	public function work(string $field, $value, Metadata $metadata, array $settings) {
+	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
 		return $settings['callbacks'][$field]($value);
 	}
 

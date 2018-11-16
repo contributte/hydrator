@@ -51,14 +51,17 @@ class Hydration implements IHydration {
 	}
 
 	/**
+	 * @param object|null $object
 	 * @param string $field
 	 * @param Metadata $metadata
+	 * @param object $entity
 	 * @return mixed
+	 * @throws SkipValueException From adapters for skip
 	 */
-	protected function getFieldValue(string $field, Metadata $metadata) {
+	protected function getFieldValue($object, string $field, Metadata $metadata, $entity = null) {
 		foreach ($this->fieldAdapters as $adapter) {
-			if ($adapter->isWorkable($field, $metadata, $this->settings)) {
-				return $adapter->work($field, $this->getValue($field), $metadata, $this->settings);
+			if ($adapter->isWorkable($object, $field, $metadata, $this->settings)) {
+				return $adapter->work($object, $field, $this->getValue($field), $metadata, $this->settings);
 			}
 		}
 
@@ -77,7 +80,9 @@ class Hydration implements IHydration {
 				$args = [];
 				foreach ($constructValues as list($field, $optional, $default)) {
 					if (array_key_exists($field, $this->values)) {
-						$args[] = $this->getFieldValue($field, $metadata);
+						try {
+							$args[] = $this->getFieldValue(null, $field, $metadata);
+						} catch (SkipValueException $e) {}
 
 						unset($this->values[$field]);
 					} else {
@@ -99,25 +104,28 @@ class Hydration implements IHydration {
 			if (!array_key_exists($field, $this->values)) {
 				continue;
 			}
-			$value = $this->getFieldValue($field, $metadata);
+			try {
+				$value = $this->getFieldValue($object, $field, $metadata, $object);
 
-			$this->propertyAccessor->set($object, $field, $value);
+				$this->propertyAccessor->set($object, $field, $value);
+			} catch (SkipValueException $e) {}
 		}
 
 		return $object;
 	}
 
 	/**
+	 * @param object $object
 	 * @param mixed $value
 	 * @param string $field
 	 * @param Metadata $metadata
 	 * @return mixed
 	 * @throws SkipValueException
 	 */
-	protected function getArrayValue($value, string $field, Metadata $metadata) {
+	protected function getArrayValue($object, $value, string $field, Metadata $metadata) {
 		foreach ($this->arrayAdapters as $adapter) {
-			if ($adapter->isWorkable($field, $metadata, $this->settings)) {
-				$value = $adapter->work($field, $value, $metadata, $this->settings);
+			if ($adapter->isWorkable($object, $field, $metadata, $this->settings)) {
+				$value = $adapter->work($object, $field, $value, $metadata, $this->settings);
 
 				// TODO: rehydrate
 
@@ -137,7 +145,7 @@ class Hydration implements IHydration {
 			try {
 				$value = $this->propertyAccessor->get($object, $field);
 
-				$values[$field] = $this->getArrayValue($value, $field, $metadata);
+				$values[$field] = $this->getArrayValue($object, $value, $field, $metadata);
 			} catch (SkipValueException $e) {}
 		}
 

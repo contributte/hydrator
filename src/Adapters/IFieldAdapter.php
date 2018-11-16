@@ -6,8 +6,23 @@ use WebChemistry\DoctrineHydration\Metadata;
 
 interface IFieldAdapter {
 
-	public function isWorkable(string $field, Metadata $metadata, array $settings): bool;
+	/**
+	 * @param object|null $object
+	 * @param string $field
+	 * @param Metadata $metadata
+	 * @param array $settings
+	 * @return bool
+	 */
+	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool;
 
-	public function work(string $field, $value, Metadata $metadata, array $settings);
+	/**
+	 * @param object|null $object
+	 * @param string $field
+	 * @param mixed $value
+	 * @param Metadata $metadata
+	 * @param array $settings
+	 * @return mixed
+	 */
+	public function work($object, string $field, $value, Metadata $metadata, array $settings);
 
 }

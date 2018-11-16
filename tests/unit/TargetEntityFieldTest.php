@@ -34,7 +34,7 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit {
 				$this->self = $self;
 			}
 
-			public function work(string $field, $value, Metadata $metadata, array $settings) {
+			public function work($object, string $field, $value, Metadata $metadata, array $settings) {
 				$this->self->called = [$field, $value];
 
 				return $this->self->obj = new Simple('foo', 'bar');
