@@ -54,11 +54,10 @@ class Hydration implements IHydration {
 	 * @param object|null $object
 	 * @param string $field
 	 * @param Metadata $metadata
-	 * @param object $entity
 	 * @return mixed
 	 * @throws SkipValueException From adapters for skip
 	 */
-	protected function getFieldValue($object, string $field, Metadata $metadata, $entity = null) {
+	protected function getFieldValue($object, string $field, Metadata $metadata) {
 		foreach ($this->fieldAdapters as $adapter) {
 			if ($adapter->isWorkable($object, $field, $metadata, $this->settings)) {
 				return $adapter->work($object, $field, $this->getValue($field), $metadata, $this->settings);
@@ -105,7 +104,7 @@ class Hydration implements IHydration {
 				continue;
 			}
 			try {
-				$value = $this->getFieldValue($object, $field, $metadata, $object);
+				$value = $this->getFieldValue($object, $field, $metadata);
 
 				$this->propertyAccessor->set($object, $field, $value);
 			} catch (SkipValueException $e) {}
