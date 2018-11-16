@@ -2,7 +2,8 @@
 	"name": "webchemistry/doctrine-hydration",
 	"type": "library",
 	"require": {
-		"webchemistry/strict-object": "~1.1"
+		"php": ">= 7.1",
+		"doctrine/orm": "^2.6.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -19,7 +20,6 @@
 	"require-dev": {
 		"phpstan/phpstan": "^0.11.0@dev",
 		"codeception/codeception": "2.5.x-dev",
-		"doctrine/orm": "^2.6.2",
 		"nette/di": "~2.4.14"
 	},
 	"scripts": {
