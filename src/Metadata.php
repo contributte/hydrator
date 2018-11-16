@@ -32,7 +32,15 @@ class Metadata {
 		return $this->metadata->getAssociationTargetClass($field);
 	}
 
-	public function getFieldMappings(string $field): array {
+	public function getFieldMapping(string $field): array {
+		return $this->metadata->getFieldMapping($field);
+	}
+
+	public function isAssociation(string $field) {
+		return isset($this->metadata->associationMappings[$field]);
+	}
+
+	public function getMapping(string $field): array {
 		if (isset($this->metadata->fieldMappings[$field])) {
 			return $this->metadata->fieldMappings[$field];
 		}
