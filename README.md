@@ -177,12 +177,12 @@ class CustomFieldAdapter implements IFieldAdapter {
 
 	public function __construct(IImageStorage $storage) { ... }
 
-	public function isWorkable(string $field, Metadata $metadata, array $settings): bool {
-		// funguj jen když typ je image
-		return $metadata->isAssociation($field) && $metadata->getFieldMapping($field)['type'] === 'image';
+	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
+		// funguj jen když typ je image a není asociace
+		return !$metadata->isAssociation($field) && $metadata->getFieldMapping($field)['type'] === 'image';
 	}
 
-	public function work(string $field, $value, Metadata $metadata, array $settings) {
+	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
 		$image = new Image($value);
 		if (isset($settings['images'][$field])) {
 			$image->setName($settings['images'][$field]);
