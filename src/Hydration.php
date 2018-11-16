@@ -14,12 +14,6 @@ class Hydration implements IHydration {
 	/** @var IMetadataFactory */
 	protected $metadataFactory;
 
-	/** @var array */
-	protected $values = [];
-
-	/** @var array */
-	protected $settings = [];
-
 	/** @var IFieldAdapter[] */
 	protected $fieldAdapters = [];
 
@@ -46,31 +40,28 @@ class Hydration implements IHydration {
 		return $this;
 	}
 
-	protected function getValue(string $field) {
-		return $this->values[$field];
-	}
-
 	/**
 	 * @param object|null $object
 	 * @param string $field
 	 * @param Metadata $metadata
+	 * @param array $values
+	 * @param array $settings
 	 * @return mixed
 	 * @throws SkipValueException From adapters for skip
 	 */
-	protected function getFieldValue($object, string $field, Metadata $metadata) {
+	protected function getFieldValue($object, string $field, Metadata $metadata, array $values, array $settings) {
 		foreach ($this->fieldAdapters as $adapter) {
-			if ($adapter->isWorkable($object, $field, $metadata, $this->settings)) {
-				return $adapter->work($object, $field, $this->getValue($field), $metadata, $this->settings);
+			if ($adapter->isWorkable($object, $field, $metadata, $settings)) {
+				return $adapter->work($object, $field, $values[$field], $metadata, $settings);
 			}
 		}
 
-		return $this->values[$field];
+		return $values[$field];
 	}
 
 	public function toFields($object, iterable $values, array $settings = []) {
 		$metadata = $this->metadataFactory->create($object);
-		$this->settings = $settings;
-		$this->values = Tools::toArray($values);
+		$values = Tools::toArray($values);
 
 		// constructor fill
 		if (is_string($object)) {
@@ -78,12 +69,12 @@ class Hydration implements IHydration {
 			if ($constructValues) {
 				$args = [];
 				foreach ($constructValues as list($field, $optional, $default)) {
-					if (array_key_exists($field, $this->values)) {
+					if (array_key_exists($field, $values)) {
 						try {
-							$args[] = $this->getFieldValue(null, $field, $metadata);
+							$args[] = $this->getFieldValue(null, $field, $metadata, $values, $settings);
 						} catch (SkipValueException $e) {}
 
-						unset($this->values[$field]);
+						unset($values[$field]);
 					} else {
 						if ($optional) {
 							$args[] = $default;
@@ -100,11 +91,11 @@ class Hydration implements IHydration {
 
 		// mappings
 		foreach ($metadata->getFields() as $field) {
-			if (!array_key_exists($field, $this->values)) {
+			if (!array_key_exists($field, $values)) {
 				continue;
 			}
 			try {
-				$value = $this->getFieldValue($object, $field, $metadata);
+				$value = $this->getFieldValue($object, $field, $metadata, $values, $settings);
 
 				$this->propertyAccessor->set($object, $field, $value);
 			} catch (SkipValueException $e) {}
@@ -118,13 +109,14 @@ class Hydration implements IHydration {
 	 * @param mixed $value
 	 * @param string $field
 	 * @param Metadata $metadata
+	 * @param array $settings
 	 * @return mixed
 	 * @throws SkipValueException
 	 */
-	protected function getArrayValue($object, $value, string $field, Metadata $metadata) {
+	protected function getArrayValue($object, $value, string $field, Metadata $metadata, array $settings) {
 		foreach ($this->arrayAdapters as $adapter) {
-			if ($adapter->isWorkable($object, $field, $metadata, $this->settings)) {
-				$value = $adapter->work($object, $field, $value, $metadata, $this->settings);
+			if ($adapter->isWorkable($object, $field, $metadata, $settings)) {
+				$value = $adapter->work($object, $field, $value, $metadata, $settings);
 
 				// TODO: rehydrate
 
@@ -137,14 +129,13 @@ class Hydration implements IHydration {
 
 	public function toArray($object, array $settings = []): array {
 		$metadata = $this->metadataFactory->create($object);
-		$this->settings = $settings;
 
 		$values = [];
 		foreach ($metadata->getFields() as $field) {
 			try {
 				$value = $this->propertyAccessor->get($object, $field);
 
-				$values[$field] = $this->getArrayValue($object, $value, $field, $metadata);
+				$values[$field] = $this->getArrayValue($object, $value, $field, $metadata, $settings);
 			} catch (SkipValueException $e) {}
 		}
 
