@@ -3,6 +3,7 @@
 namespace WebChemistry\DoctrineHydration\Adapters;
 
 use Doctrine\ORM\EntityManagerInterface;
+use WebChemistry\DoctrineHydration\Helpers\RecursiveHydration;
 use WebChemistry\DoctrineHydration\Metadata;
 
 class TargetEntityFieldAdapter implements IFieldAdapter {
@@ -26,6 +27,11 @@ class TargetEntityFieldAdapter implements IFieldAdapter {
 		}
 		if ($value === null) {
 			return null;
+		}
+		if (is_array($value)) {
+			// TODO: settings
+
+			return new RecursiveHydration($targetEntity, $value);
 		}
 
 		return $this->em->getRepository($targetEntity)->find($value);

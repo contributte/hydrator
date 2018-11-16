@@ -5,6 +5,7 @@ use WebChemistry\DoctrineHydration\Adapters\TargetEntityFieldAdapter;
 use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
 use WebChemistry\DoctrineHydration\Hydration;
 use WebChemistry\DoctrineHydration\Metadata;
+use WebChemistry\Test\Helpers;
 
 class TargetEntityFieldTest extends \Codeception\Test\Unit {
 
@@ -18,12 +19,14 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit {
 	 */
 	protected $hydrator;
 
+	private $em;
+
 	public $called;
 
 	public $obj;
 
 	protected function _before() {
-		$em = $this->getModule('\Helper\Unit')->createEntityManager();
+		$this->em = $em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
 		$this->hydrator->addFieldAdapter(new class($em, $this) extends TargetEntityFieldAdapter {
 
@@ -55,6 +58,24 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit {
 		$this->assertNotNull($this->called);
 		$this->assertSame(['simple', 15], $this->called);
 		$this->assertSame($obj->getSimple(), $this->obj);
+	}
+
+	public function testArray() {
+		Helpers::resetProperty($this->hydrator, 'fieldAdapters', []);
+		$this->hydrator->addFieldAdapter(new TargetEntityFieldAdapter($this->em));
+
+		/** @var ManyToOne $obj */
+		$obj = $this->hydrator->toFields(ManyToOne::class, [
+			'simple' => [
+				'name' => 'foo',
+				'position' => 'bar',
+			],
+		]);
+
+		$simple = $obj->getSimple();
+		$this->assertInstanceOf(Simple::class, $simple);
+		$this->assertSame('foo', $simple->getName());
+		$this->assertSame('bar', $simple->getPosition());
 	}
 
 }

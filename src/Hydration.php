@@ -6,6 +6,7 @@ use Nette\SmartObject;
 use WebChemistry\DoctrineHydration\Adapters\IArrayAdapter;
 use WebChemistry\DoctrineHydration\Adapters\IFieldAdapter;
 use WebChemistry\DoctrineHydration\Factories\IMetadataFactory;
+use WebChemistry\DoctrineHydration\Helpers\RecursiveHydration;
 
 class Hydration implements IHydration {
 
@@ -52,7 +53,12 @@ class Hydration implements IHydration {
 	protected function getFieldValue($object, string $field, Metadata $metadata, array $values, array $settings) {
 		foreach ($this->fieldAdapters as $adapter) {
 			if ($adapter->isWorkable($object, $field, $metadata, $settings)) {
-				return $adapter->work($object, $field, $values[$field], $metadata, $settings);
+				$value = $adapter->work($object, $field, $values[$field], $metadata, $settings);
+				if ($value instanceof RecursiveHydration) {
+					$value = $this->toFields($value->getObject(), $value->getValues(), $value->getSettings());
+				}
+
+				return $value;
 			}
 		}
 
