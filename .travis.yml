@@ -1,0 +1,22 @@
+language: php
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+install:
+  # Composer
+  - travis_retry composer install --no-progress --prefer-dist
+
+script:
+  # Tests
+  - composer run-script phpunit
+
+jobs:
+  include:
+    - stage: Phpstan
+      php: 7.1
+      script:
+        - composer run-script stan
+
+sudo: false
