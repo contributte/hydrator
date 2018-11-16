@@ -36,22 +36,4 @@ class ToolsTest extends \Codeception\Test\Unit {
 		$this->assertSame([], Tools::constructorValues('stdClass'));
 	}
 
-	public function testSetters(): void {
-		$obj = new SettersGetters();
-
-		Tools::injectToObject($obj, 'foo', 'foo');
-		Tools::injectToObject($obj, 'magic', 'foo');
-
-		$this->assertSame('fixed', $obj->getFoo());
-		$this->assertSame('foo', $obj->getMagic());
-	}
-
-	public function testGetters(): void {
-		$obj = new SettersGetters();
-
-		$this->assertSame('foo', Tools::getFromObject($obj, 'foo'));
-		$this->assertSame('bar', Tools::getFromObject($obj, 'bar'));
-		$this->assertSame(true, Tools::getFromObject($obj, 'bool'));
-	}
-
 }

@@ -2,10 +2,17 @@
 
 namespace WebChemistry\DoctrineHydration\Adapters;
 
+use WebChemistry\DoctrineHydration\IPropertyAccessor;
 use WebChemistry\DoctrineHydration\Metadata;
-use WebChemistry\DoctrineHydration\Tools;
 
 class JoinArrayAdapter implements IArrayAdapter {
+
+	/** @var IPropertyAccessor */
+	private $propertyAccessor;
+
+	public function __construct(IPropertyAccessor $propertyAccessor) {
+		$this->propertyAccessor = $propertyAccessor;
+	}
 
 	public function isWorkable(string $field, Metadata $metadata, array $settings): bool {
 		return isset($settings['joins'][$field]);
@@ -16,7 +23,7 @@ class JoinArrayAdapter implements IArrayAdapter {
 			return $value;
 		}
 
-		return Tools::getFromObject($value, $settings['joins'][$field]);
+		return $this->propertyAccessor->get($value, $settings['joins'][$field]);
 	}
 
 }

@@ -3,6 +3,7 @@
 use WebChemistry\DoctrineHydration\Adapters\ManyToOneArrayAdapter;
 use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
 use WebChemistry\DoctrineHydration\Hydration;
+use WebChemistry\DoctrineHydration\PropertyAccessor;
 
 class ManyToOneArrayTest extends \Codeception\Test\Unit {
 
@@ -19,7 +20,7 @@ class ManyToOneArrayTest extends \Codeception\Test\Unit {
 	protected function _before() {
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
-		$this->hydrator->addArrayAdapter(new ManyToOneArrayAdapter($em));
+		$this->hydrator->addArrayAdapter(new ManyToOneArrayAdapter($em, new PropertyAccessor()));
 	}
 
 	protected function _after() {

@@ -26,8 +26,12 @@ class Hydration implements IHydration {
 	/** @var IArrayAdapter[] */
 	protected $arrayAdapters = [];
 
-	public function __construct(IMetadataFactory $metadataFactory) {
+	/** @var IPropertyAccessor */
+	private $propertyAccessor;
+
+	public function __construct(IMetadataFactory $metadataFactory, ?IPropertyAccessor $propertyAccessor = null) {
 		$this->metadataFactory = $metadataFactory;
+		$this->propertyAccessor = $propertyAccessor ?: new PropertyAccessor();
 	}
 
 	public function addFieldAdapter(IFieldAdapter $adapter) {
@@ -97,7 +101,7 @@ class Hydration implements IHydration {
 			}
 			$value = $this->getFieldValue($field, $metadata);
 
-			Tools::injectToObject($object, $field, $value);
+			$this->propertyAccessor->set($object, $field, $value);
 		}
 
 		return $object;
@@ -131,7 +135,8 @@ class Hydration implements IHydration {
 		$values = [];
 		foreach ($metadata->getFields() as $field) {
 			try {
-				$value = Tools::getFromObject($object, $field);
+				$value = $this->propertyAccessor->get($object, $field);
+
 				$values[$field] = $this->getArrayValue($value, $field, $metadata);
 			} catch (SkipValueException $e) {}
 		}

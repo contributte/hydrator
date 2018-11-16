@@ -9,6 +9,8 @@ use WebChemistry\DoctrineHydration\Factories\IMetadataFactory;
 use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
 use WebChemistry\DoctrineHydration\Hydration;
 use WebChemistry\DoctrineHydration\IHydration;
+use WebChemistry\DoctrineHydration\IPropertyAccessor;
+use WebChemistry\DoctrineHydration\PropertyAccessor;
 
 class HydrationExtension extends CompilerExtension {
 
@@ -17,10 +19,11 @@ class HydrationExtension extends CompilerExtension {
 		'adapters' => [
 			'fields' => [],
 			'array' => [],
-		]
+		],
+		'propertyAccessor' => PropertyAccessor::class,
 	];
 
-	public function loadConfiguration(): void {
+	public function loadConfiguration() {
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
 
@@ -31,6 +34,10 @@ class HydrationExtension extends CompilerExtension {
 		$builder->addDefinition($this->prefix('metadataFactory'))
 			->setType(IMetadataFactory::class)
 			->setFactory(MetadataFactory::class);
+
+		$builder->addDefinition($this->prefix('propertyAccessor'))
+			->setType(IPropertyAccessor::class)
+			->setFactory($config['propertyAccessor']);
 
 		foreach ($config['adapters']['fields'] as $name => $adapter) {
 			if (class_exists($adapter)) {

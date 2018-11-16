@@ -3,6 +3,7 @@
 use WebChemistry\DoctrineHydration\Adapters\JoinArrayAdapter;
 use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
 use WebChemistry\DoctrineHydration\Hydration;
+use WebChemistry\DoctrineHydration\PropertyAccessor;
 
 class JoinArrayTest extends \Codeception\Test\Unit {
 
@@ -19,7 +20,7 @@ class JoinArrayTest extends \Codeception\Test\Unit {
 	protected function _before() {
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
-		$this->hydrator->addArrayAdapter(new JoinArrayAdapter());
+		$this->hydrator->addArrayAdapter(new JoinArrayAdapter(new PropertyAccessor()));
 	}
 
 	protected function _after() {

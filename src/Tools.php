@@ -50,33 +50,4 @@ class Tools {
 		return self::$cache[$object];
 	}
 
-	public static function getFromObject($object, string $name) {
-		$getter = 'get' . ucfirst($name);
-		$isser = 'is' . ucfirst($name);
-
-		if (method_exists($object, $getter)) {
-			return $object->$getter();
-		} else if (method_exists($object, $isser)) {
-			return $object->$isser();
-		} else {
-			return $object->$name;
-		}
-	}
-
-	/**
-	 * @param object $object
-	 * @param string $name
-	 * @param mixed $value
-	 */
-	public static function injectToObject($object, string $name, $value): void {
-		$setter = 'set' . ucfirst($name);
-		if (method_exists($object, $setter)) {
-			$object->$setter($value);
-		} else if (method_exists($object, '__set__MagicHydration')) {
-			$object->__set__MagicHydration($name, $value);
-		} else {
-			$object->$name = $value;
-		}
-	}
-
 }
