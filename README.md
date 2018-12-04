@@ -60,13 +60,13 @@ V nette:
 
 ```yaml
 hydration:
-	adapters:
-		fields:
-			- WebChemistry\DoctrineHydration\Adapters\CallbackFieldAdapter
-			- WebChemistry\DoctrineHydration\Adapters\TargetEntityFieldAdapter
-		array:
-			- WebChemistry\DoctrineHydration\Adapters\JoinArrayAdapter
-			- WebChemistry\DoctrineHydration\Adapters\ManyToOneAdapter
+    adapters:
+        fields:
+            - WebChemistry\DoctrineHydration\Adapters\CallbackFieldAdapter
+            - WebChemistry\DoctrineHydration\Adapters\TargetEntityFieldAdapter
+        array:
+            - WebChemistry\DoctrineHydration\Adapters\JoinArrayAdapter
+            - WebChemistry\DoctrineHydration\Adapters\ManyToOneAdapter
 
 ```
 
@@ -200,9 +200,9 @@ Registrace v nette:
 
 ```yaml
 hydration:
-	adapters:
-		fields: 
-			- CustomFieldAdapter
+    adapters:
+        fields: 
+            - CustomFieldAdapter
 ```
 
 Použití:
