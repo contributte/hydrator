@@ -46,7 +46,7 @@ class CustomPropertyAccessor implements IPropertyAccessor {
 Nette registrace:
 ```yaml
 hydration:
-	propertyAccessor: CustomPropertyAccessor
+    propertyAccessor: CustomPropertyAccessor
 ```
 
 ## Adaptéry
