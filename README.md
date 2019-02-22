@@ -1,12 +1,12 @@
 ## Entity to array and conversely
 
-[![Build Status](https://travis-ci.org/WebChemistry/doctrine-hydration.svg?branch=master)](https://travis-ci.org/WebChemistry/doctrine-hydration)
+[![Build Status](https://travis-ci.org/Nettrine/doctrine-hydration.svg?branch=master)](https://travis-ci.org/Nettrine/doctrine-hydration)
 
 ## Nette instalace
 
 ```yaml
 extensions:
-    hydration: WebChemistry\DoctrineHydration\DI\HydrationExtension
+    hydration: Nettrine\DoctrineHydration
 ```
 
 ## Základní použití
@@ -36,9 +36,9 @@ Slouží k získání hodnoty z objektu nebo zapsání hodnoty do objektu.
 ```php
 class CustomPropertyAccessor implements IPropertyAccessor {
 	
-	public function get($object, string $property) { ... }
+	public function get(object $object, string $property) { ... }
 	
-	public function set($object, string $property, $value): void { ... }
+	public function set(object $object, string $property, $value): void { ... }
 	
 }
 ```
@@ -62,11 +62,11 @@ V nette:
 hydration:
     adapters:
         fields:
-            - WebChemistry\DoctrineHydration\Adapters\CallbackFieldAdapter
-            - WebChemistry\DoctrineHydration\Adapters\TargetEntityFieldAdapter
+            - Nettrine\DoctrineHydration\Adapters\CallbackFieldAdapter
+            - Nettrine\DoctrineHydration\Adapters\TargetEntityFieldAdapter
         array:
-            - WebChemistry\DoctrineHydration\Adapters\JoinArrayAdapter
-            - WebChemistry\DoctrineHydration\Adapters\ManyToOneAdapter
+            - Nettrine\DoctrineHydration\Adapters\JoinArrayAdapter
+            - Nettrine\DoctrineHydration\Adapters\ManyToOneAdapter
 
 ```
 
@@ -177,19 +177,20 @@ class CustomFieldAdapter implements IFieldAdapter {
 
 	public function __construct(IImageStorage $storage) { ... }
 
-	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
+	public function isWorkable(FieldArgs $args): bool {
 		// funguj jen když typ je image a není asociace
-		return !$metadata->isAssociation($field) && $metadata->getFieldMapping($field)['type'] === 'image';
+		return 
+		return !$args->metadata->isAssociation($field) && $args->metadata->getFieldMapping($field)['type'] === 'image';
 	}
 
-	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
+	public function work(FieldArgs $args): void {
 		$image = new Image($value);
-		if (isset($settings['images'][$field])) {
-			$image->setName($settings['images'][$field]);
+		if ($args->hasSettingsSection('images')) {
+			$image->setName($args->getSettingsSection('images'));
 		}
 		$this->storage->save($image);
 		
-		return $image;
+		$args->value = $image;
 	}
 
 }

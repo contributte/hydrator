@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Arguments;
+namespace Nettrine\DoctrineHydration\Arguments;
 
 use Nette\SmartObject;
-use WebChemistry\DoctrineHydration\Metadata;
+use Nettrine\DoctrineHydration\Metadata;
 
 /**
  * @property-read Metadata $metadata
@@ -11,25 +11,24 @@ use WebChemistry\DoctrineHydration\Metadata;
  * @property-read string $field
  * @property-read array $settings
  */
-abstract class ArgsAbstract {
+abstract class BaseArgs
+{
 
 	use SmartObject {
 		SmartObject::__get as private smartObjectGet;
 		SmartObject::__set as private smartObjectSet;
 	}
 
-	/** @var array */
-	protected $getters = [
-		'metadata', 'settings', 'field', 'value',
-	];
+	/** @var string[] */
+	protected $getters = ['metadata', 'settings', 'field', 'value'];
 
-	/** @var array */
+	/** @var string[] */
 	protected $setters = [];
 
 	/** @var Metadata */
 	protected $metadata;
 
-	/** @var array */
+	/** @var mixed[] */
 	protected $settings;
 
 	/** @var string */
@@ -42,43 +41,50 @@ abstract class ArgsAbstract {
 	 * @param mixed $value
 	 * @param mixed[] $settings
 	 */
-	public function __construct(Metadata $metadata, $value, string $field, array $settings) {
+	public function __construct(Metadata $metadata, $value, string $field, array $settings)
+	{
 		$this->metadata = $metadata;
 		$this->settings = $settings;
 		$this->field = $field;
 		$this->value = $value;
 	}
 
-	public function hasSettingsSection(string $section): bool {
+	public function hasSettingsSection(string $section): bool
+	{
 		return isset($this->settings[$section][$this->field]);
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getSettingsSection(string $section) {
+	public function getSettingsSection(string $section)
+	{
 		return $this->settings[$section][$this->field];
 	}
 
-	public function getMetadata(): Metadata {
+	public function getMetadata(): Metadata
+	{
 		return $this->metadata;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getValue() {
+	public function getValue()
+	{
 		return $this->value;
 	}
 
-	public function getField(): string {
+	public function getField(): string
+	{
 		return $this->field;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function __get(string $name) {
+	public function __get(string $name)
+	{
 		if (in_array($name, $this->getters)) {
 			$getter = 'get' . ucfirst($name);
 			if (method_exists($this, $getter)) {
@@ -94,7 +100,8 @@ abstract class ArgsAbstract {
 	/**
 	 * @param mixed $value
 	 */
-	public function __set(string $name, $value): void {
+	public function __set(string $name, $value): void
+	{
 		if (in_array($name, $this->setters)) {
 			$setter = 'set' . ucfirst($name);
 			if (method_exists($this, $setter)) {

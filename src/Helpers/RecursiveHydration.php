@@ -1,20 +1,21 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Helpers;
+namespace Nettrine\DoctrineHydration\Helpers;
 
 use Nette\SmartObject;
 
-class RecursiveHydration {
+class RecursiveHydration
+{
 
 	use SmartObject;
 
 	/** @var object|string */
 	private $object;
 
-	/** @var array */
+	/** @var mixed[] */
 	private $values;
 
-	/** @var array */
+	/** @var mixed[] */
 	private $settings;
 
 	/**
@@ -22,7 +23,8 @@ class RecursiveHydration {
 	 * @param mixed[] $values
 	 * @param mixed[] $settings
 	 */
-	public function __construct($object, array $values, array $settings = []) {
+	public function __construct($object, array $values, array $settings = [])
+	{
 		$this->object = $object;
 		$this->values = $values;
 		$this->settings = $settings;
@@ -31,21 +33,24 @@ class RecursiveHydration {
 	/**
 	 * @return object|string
 	 */
-	public function getObject() {
+	public function getObject()
+	{
 		return $this->object;
 	}
 
 	/**
 	 * @return mixed[]
 	 */
-	public function getSettings(): array {
+	public function getSettings(): array
+	{
 		return $this->settings;
 	}
 
 	/**
 	 * @return mixed[]
 	 */
-	public function getValues(): array {
+	public function getValues(): array
+	{
 		return $this->values;
 	}
 

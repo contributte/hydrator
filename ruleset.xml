@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Contributte">
+    <!-- Contributte Coding Standard -->
+    <rule ref="./vendor/ninjify/coding-standard/contributte.xml"/>
+
+    <!-- Specific rules -->
+    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+        <properties>
+            <property name="rootNamespaces" type="array" value="
+                src=>Nettrine\DoctrineHydration
+            "/>
+        </properties>
+    </rule>
+
+    <!-- Exclude folders -->
+    <exclude-pattern>/tests/</exclude-pattern>
+    <exclude-pattern>/src/TMagicHydration.php</exclude-pattern>
+</ruleset>

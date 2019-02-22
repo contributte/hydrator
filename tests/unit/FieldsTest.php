@@ -1,9 +1,10 @@
 <?php
 
-use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
-use WebChemistry\DoctrineHydration\Hydration;
+use Nettrine\DoctrineHydration\Factories\MetadataFactory;
+use Nettrine\DoctrineHydration\Hydration;
 
-class FieldsTest extends \Codeception\Test\Unit {
+class FieldsTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
@@ -15,17 +16,20 @@ class FieldsTest extends \Codeception\Test\Unit {
 	 */
 	protected $hydrator;
 
-	protected function _before() {
+	protected function _before()
+	{
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
-	private function getField($object, string $field) {
+	private function getField($object, string $field)
+	{
 		$values = [];
-		foreach ((array)$object as $name => $value) {
+		foreach ((array) $object as $name => $value) {
 			if (strpos($name, "\0") !== false) {
 				$name = substr($name, strrpos($name, "\0") + 1);
 			}
@@ -36,7 +40,8 @@ class FieldsTest extends \Codeception\Test\Unit {
 	}
 
 	// tests
-	public function testConstructorValues() {
+	public function testConstructorValues()
+	{
 		/** @var Simple $obj */
 		$obj = $this->hydrator->toFields(Simple::class, [
 			'name' => 'foo',
@@ -48,7 +53,8 @@ class FieldsTest extends \Codeception\Test\Unit {
 		$this->assertSame(null, $this->getField($obj, 'nullable'));
 	}
 
-	public function testConstructorValuesFillNullable() {
+	public function testConstructorValuesFillNullable()
+	{
 		/** @var Simple $obj */
 		$obj = $this->hydrator->toFields(Simple::class, [
 			'name' => 'foo',

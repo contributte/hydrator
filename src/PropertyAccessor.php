@@ -1,10 +1,16 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration;
+namespace Nettrine\DoctrineHydration;
 
-class PropertyAccessor implements IPropertyAccessor {
+class PropertyAccessor implements IPropertyAccessor
+{
 
-	public function get($object, string $property) {
+	/**
+	 * @return mixed
+	 * @throws PropertyAccessException
+	 */
+	public function get(object $object, string $property)
+	{
 		$ucfirst = ucfirst($property);
 		$methods = [
 			'get' . $ucfirst,
@@ -25,7 +31,12 @@ class PropertyAccessor implements IPropertyAccessor {
 		return $object->$property;
 	}
 
-	public function set($object, string $property, $value): void {
+	/**
+	 * @param mixed $value
+	 * @throws PropertyAccessException
+	 */
+	public function set(object $object, string $property, $value): void
+	{
 		$ucfirst = ucfirst($property);
 		$methods = [
 			'set' . $ucfirst,
@@ -38,8 +49,8 @@ class PropertyAccessor implements IPropertyAccessor {
 			}
 		}
 
-		if (method_exists($object, '__set__MagicHydration')) {
-			$object->__set__MagicHydration($property, $value);
+		if (method_exists($object, '__set__magicHydration')) {
+			$object->__set__magicHydration($property, $value);
 		} else {
 			if (!property_exists($object, $property)) {
 				throw PropertyAccessException::notExists($object, $property);

@@ -1,10 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Factories;
+namespace Nettrine\DoctrineHydration\Factories;
 
-use WebChemistry\DoctrineHydration\Metadata;
+use Nettrine\DoctrineHydration\Metadata;
 
-interface IMetadataFactory {
+interface IMetadataFactory
+{
 
 	/**
 	 * @param object|string $object

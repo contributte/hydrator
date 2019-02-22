@@ -1,46 +1,65 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration;
+namespace Nettrine\DoctrineHydration;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\MappingException;
+use ReflectionClass;
+use ReflectionException;
 
-class Metadata {
+class Metadata
+{
 
 	/** @var ClassMetadata */
 	private $metadata;
 
-	/** @var array */
+	/** @var mixed[] */
 	private $constructorValues = [];
 
-	/** @var \ReflectionClass */
+	/** @var ReflectionClass */
 	private $reflection;
 
-	public function __construct(ClassMetadata $classMetadata) {
+	public function __construct(ClassMetadata $classMetadata)
+	{
 		$this->metadata = $classMetadata;
 		$this->reflection = Tools::reflectionClass($classMetadata->getName());
 	}
 
-	public function getMetadata(): ClassMetadata {
+	public function getMetadata(): ClassMetadata
+	{
 		return $this->metadata;
 	}
 
-	public function isManyToOne(string $field): bool {
+	public function isManyToOne(string $field): bool
+	{
 		return $this->metadata->hasAssociation($field) && $this->metadata->associationMappings[$field]['isOwningSide'];
 	}
 
-	public function getAssociationTargetClass(string $field): string {
+	public function getAssociationTargetClass(string $field): string
+	{
 		return $this->metadata->getAssociationTargetClass($field);
 	}
 
-	public function getFieldMapping(string $field): array {
+	/**
+	 * @return mixed[]
+	 * @throws MappingException
+	 */
+	public function getFieldMapping(string $field): array
+	{
 		return $this->metadata->getFieldMapping($field);
 	}
 
-	public function isAssociation(string $field) {
+	public function isAssociation(string $field): bool
+	{
 		return isset($this->metadata->associationMappings[$field]);
 	}
 
-	public function getMapping(string $field): array {
+	/**
+	 * @return mixed[]
+	 * @throws HydrationException
+	 */
+	public function getMapping(string $field): array
+	{
 		if (isset($this->metadata->fieldMappings[$field])) {
 			return $this->metadata->fieldMappings[$field];
 		}
@@ -48,18 +67,31 @@ class Metadata {
 			return $this->metadata->associationMappings[$field];
 		}
 
-		throw new HydrationException("Field $field not exists in " . $this->metadata->getName());
+		throw new HydrationException(sprintf('Field %s not exists in %s', $field, $this->metadata->getName()));
 	}
 
-	public function getFields(): array {
+	/**
+	 * @return mixed[]
+	 */
+	public function getFields(): array
+	{
 		return array_merge(array_keys($this->metadata->fieldMappings), array_keys($this->metadata->associationMappings));
 	}
 
-	public function newInstance(array $args) {
+	/**
+	 * @param mixed[] $args
+	 */
+	public function newInstance(array $args): object
+	{
 		return $this->reflection->newInstanceArgs($args);
 	}
 
-	public function getConstructorValues(): array {
+	/**
+	 * @return mixed[]
+	 * @throws ReflectionException
+	 */
+	public function getConstructorValues(): array
+	{
 		if (!$this->constructorValues) {
 			$this->constructorValues = Tools::constructorValues($this->metadata->getName());
 		}

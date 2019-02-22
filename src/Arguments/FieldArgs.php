@@ -1,14 +1,16 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Arguments;
+namespace Nettrine\DoctrineHydration\Arguments;
 
-use WebChemistry\DoctrineHydration\Metadata;
+use Nettrine\DoctrineHydration\Metadata;
 
 /**
  * @property-read object|null $object
  * @property mixed $value
+ * @property-read mixed[] $values
  */
-final class FieldArgs extends ArgsAbstract {
+final class FieldArgs extends BaseArgs
+{
 
 	/** @var object|null */
 	protected $object;
@@ -20,7 +22,8 @@ final class FieldArgs extends ArgsAbstract {
 	 * @param mixed[] $values
 	 * @param mixed[] $settings
 	 */
-	public function __construct(?object $object, string $field, array $values, Metadata $metadata, array $settings) {
+	public function __construct(?object $object, string $field, array $values, Metadata $metadata, array $settings)
+	{
 		parent::__construct($metadata, $values[$field], $field, $settings);
 
 		$this->object = $object;
@@ -29,6 +32,15 @@ final class FieldArgs extends ArgsAbstract {
 		// magic
 		$this->setters[] = 'value';
 		$this->getters[] = 'object';
+		$this->getters[] = 'values';
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getValues(): array
+	{
+		return $this->values;
 	}
 
 }

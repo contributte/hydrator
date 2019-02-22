@@ -1,10 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Adapters;
+namespace Nettrine\DoctrineHydration\Adapters;
 
-use WebChemistry\DoctrineHydration\Arguments\ArrayArgs;
+use Nettrine\DoctrineHydration\Arguments\ArrayArgs;
 
-interface IArrayAdapter {
+interface IArrayAdapter
+{
 
 	public function isWorkable(ArrayArgs $args): bool;
 

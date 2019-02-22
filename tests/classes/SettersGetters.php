@@ -1,12 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Test;
+namespace Nettrine\Test;
 
-use WebChemistry\DoctrineHydration\MagicHydration;
+use Nettrine\DoctrineHydration\TMagicHydration;
 
-class SettersGetters {
+class SettersGetters
+{
 
-	use MagicHydration;
+	use TMagicHydration;
 
 	private $foo = 'foo';
 
@@ -16,28 +17,32 @@ class SettersGetters {
 
 	protected $bool = true;
 
-	public function setFoo($value): void {
+	public function setFoo($value): void
+	{
 		$this->foo = 'fixed';
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isBool(): bool {
+	public function isBool(): bool
+	{
 		return $this->bool;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getFoo() {
+	public function getFoo()
+	{
 		return $this->foo;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getMagic() {
+	public function getMagic()
+	{
 		return $this->magic;
 	}
 

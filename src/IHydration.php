@@ -1,14 +1,21 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration;
+namespace Nettrine\DoctrineHydration;
 
-use WebChemistry\DoctrineHydration\Adapters\IArrayAdapter;
-use WebChemistry\DoctrineHydration\Adapters\IFieldAdapter;
+use Nettrine\DoctrineHydration\Adapters\IArrayAdapter;
+use Nettrine\DoctrineHydration\Adapters\IFieldAdapter;
 
-interface IHydration {
+interface IHydration
+{
 
+	/**
+	 * @return static
+	 */
 	public function addFieldAdapter(IFieldAdapter $adapter);
 
+	/**
+	 * @return static
+	 */
 	public function addArrayAdapter(IArrayAdapter $adapter);
 
 	/**
@@ -18,6 +25,10 @@ interface IHydration {
 	 */
 	public function toFields($object, iterable $values, array $settings = []): object;
 
+	/**
+	 * @param mixed[] $settings
+	 * @return mixed[]
+	 */
 	public function toArray(object $object, array $settings = []): array;
 
 }

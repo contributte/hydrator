@@ -1,10 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Test;
+namespace Nettrine\Test;
 
-final class ConstructorValues {
+final class ConstructorValues
+{
 
-	public function __construct(string $string, ?string $nullable, $mixed, $default = 'foo') {
+	public function __construct(string $string, ?string $nullable, $mixed, $default = 'foo')
+	{
 	}
 
 }

@@ -1,26 +1,38 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration;
+namespace Nettrine\DoctrineHydration;
 
+use Nette\StaticClass;
 use ReflectionClass;
+use ReflectionException;
+use Traversable;
 
-class Tools {
+final class Tools
+{
 
-	/** @var array */
+	use StaticClass;
+
+	/** @var mixed[] */
 	private static $cache = [];
 
 	/** @var ReflectionClass[] */
 	private static $reflectionCache = [];
 
-	public static function toArray(iterable $values): array {
-		if ($values instanceof \Traversable) {
+	/**
+	 * @param mixed[] $values
+	 * @return mixed[]
+	 */
+	public static function toArray(iterable $values): array
+	{
+		if ($values instanceof Traversable) {
 			$values = iterator_to_array($values);
 		}
 
 		return $values;
 	}
 
-	public static function reflectionClass(string $object): ReflectionClass {
+	public static function reflectionClass(string $object): ReflectionClass
+	{
 		if (!isset(self::$reflectionCache[$object])) {
 			self::$reflectionCache[$object] = new ReflectionClass($object);
 		}
@@ -28,7 +40,12 @@ class Tools {
 		return self::$reflectionCache[$object];
 	}
 
-	public static function constructorValues(string $object): array {
+	/**
+	 * @return mixed[]
+	 * @throws ReflectionException
+	 */
+	public static function constructorValues(string $object): array
+	{
 		if (!isset(self::$cache[$object])) {
 			self::$cache[$object] = [];
 

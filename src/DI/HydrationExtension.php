@@ -1,20 +1,21 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\DI;
+namespace Nettrine\DoctrineHydration\DI;
 
 use Nette\DI\CompilerExtension;
-use WebChemistry\DoctrineHydration\Adapters\IArrayAdapter;
-use WebChemistry\DoctrineHydration\Adapters\IFieldAdapter;
-use WebChemistry\DoctrineHydration\Factories\IMetadataFactory;
-use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
-use WebChemistry\DoctrineHydration\Hydration;
-use WebChemistry\DoctrineHydration\IHydration;
-use WebChemistry\DoctrineHydration\IPropertyAccessor;
-use WebChemistry\DoctrineHydration\PropertyAccessor;
+use Nettrine\DoctrineHydration\Adapters\IArrayAdapter;
+use Nettrine\DoctrineHydration\Adapters\IFieldAdapter;
+use Nettrine\DoctrineHydration\Factories\IMetadataFactory;
+use Nettrine\DoctrineHydration\Factories\MetadataFactory;
+use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\DoctrineHydration\IHydration;
+use Nettrine\DoctrineHydration\IPropertyAccessor;
+use Nettrine\DoctrineHydration\PropertyAccessor;
 
-class HydrationExtension extends CompilerExtension {
+class HydrationExtension extends CompilerExtension
+{
 
-	/** @var array */
+	/** @var mixed[] */
 	public $defaults = [
 		'adapters' => [
 			'fields' => [],
@@ -23,7 +24,8 @@ class HydrationExtension extends CompilerExtension {
 		'propertyAccessor' => PropertyAccessor::class,
 	];
 
-	public function loadConfiguration() {
+	public function loadConfiguration(): void
+	{
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
 

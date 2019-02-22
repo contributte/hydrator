@@ -1,14 +1,15 @@
 <?php declare(strict_types = 1);
 
 use Doctrine\ORM\Mapping as ORM;
-use WebChemistry\DoctrineHydration\MagicHydration;
+use Nettrine\DoctrineHydration\TMagicHydration;
 
 /**
  * @Entity()
  */
-class ManyToOne {
+class ManyToOne
+{
 
-	use MagicHydration;
+	use TMagicHydration;
 
 	/**
 	 * @var int
@@ -24,21 +25,24 @@ class ManyToOne {
 	 */
 	protected $simple;
 
-	public function __construct(?Simple $simple = null) {
+	public function __construct(?Simple $simple = null)
+	{
 		$this->simple = $simple;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getId() {
+	public function getId()
+	{
 		return $this->id;
 	}
 
 	/**
 	 * @return Simple
 	 */
-	public function getSimple(): Simple {
+	public function getSimple(): Simple
+	{
 		return $this->simple;
 	}
 

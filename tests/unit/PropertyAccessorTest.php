@@ -1,23 +1,27 @@
 <?php
 
-use WebChemistry\DoctrineHydration\PropertyAccessor;
-use WebChemistry\Test\SettersGetters;
+use Nettrine\DoctrineHydration\PropertyAccessor;
+use Nettrine\Test\SettersGetters;
 
-class PropertyAccessorTest extends \Codeception\Test\Unit {
+class PropertyAccessorTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
 
-	protected function _before() {
+	protected function _before()
+	{
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
 	// tests
-	public function testGetters() {
+	public function testGetters()
+	{
 		$obj = new SettersGetters();
 		$accessor = new PropertyAccessor();
 

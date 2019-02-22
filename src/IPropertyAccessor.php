@@ -1,21 +1,18 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration;
+namespace Nettrine\DoctrineHydration;
 
-interface IPropertyAccessor {
+interface IPropertyAccessor
+{
 
 	/**
-	 * @param object $object
-	 * @param string $property
 	 * @return mixed
 	 */
-	public function get($object, string $property);
+	public function get(object $object, string $property);
 
 	/**
-	 * @param object $object
-	 * @param string $property
 	 * @param mixed $value
 	 */
-	public function set($object, string $property, $value): void;
+	public function set(object $object, string $property, $value): void;
 
 }

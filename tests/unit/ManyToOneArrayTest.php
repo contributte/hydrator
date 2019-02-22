@@ -1,11 +1,12 @@
 <?php
 
-use WebChemistry\DoctrineHydration\Adapters\ManyToOneArrayAdapter;
-use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
-use WebChemistry\DoctrineHydration\Hydration;
-use WebChemistry\DoctrineHydration\PropertyAccessor;
+use Nettrine\DoctrineHydration\Adapters\ManyToOneArrayAdapter;
+use Nettrine\DoctrineHydration\Factories\MetadataFactory;
+use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\DoctrineHydration\PropertyAccessor;
 
-class ManyToOneArrayTest extends \Codeception\Test\Unit {
+class ManyToOneArrayTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
@@ -17,17 +18,20 @@ class ManyToOneArrayTest extends \Codeception\Test\Unit {
 	 */
 	protected $hydrator;
 
-	protected function _before() {
+	protected function _before()
+	{
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
 		$this->hydrator->addArrayAdapter(new ManyToOneArrayAdapter($em, new PropertyAccessor()));
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
 	// tests
-	public function testManyToOne() {
+	public function testManyToOne()
+	{
 		$simple = new Simple('foo', 'bar');
 		$simple->setId(1);
 		$manyToOne = new ManyToOne($simple);

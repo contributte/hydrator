@@ -1,4 +1,5 @@
 <?php
+
 namespace Helper;
 
 // here you can define custom actions
@@ -10,9 +11,10 @@ use Doctrine\ORM\Tools\Setup;
 class Unit extends \Codeception\Module
 {
 
-	public function createEntityManager() {
+	public function createEntityManager()
+	{
 		$config = Setup::createAnnotationMetadataConfiguration([
-			__DIR__ . '/../../entities'
+			__DIR__ . '/../../entities',
 		], true);
 
 		$conn = [

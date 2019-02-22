@@ -1,11 +1,12 @@
 <?php
 
-use WebChemistry\DoctrineHydration\Adapters\JoinArrayAdapter;
-use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
-use WebChemistry\DoctrineHydration\Hydration;
-use WebChemistry\DoctrineHydration\PropertyAccessor;
+use Nettrine\DoctrineHydration\Adapters\JoinArrayAdapter;
+use Nettrine\DoctrineHydration\Factories\MetadataFactory;
+use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\DoctrineHydration\PropertyAccessor;
 
-class JoinArrayTest extends \Codeception\Test\Unit {
+class JoinArrayTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
@@ -17,17 +18,20 @@ class JoinArrayTest extends \Codeception\Test\Unit {
 	 */
 	protected $hydrator;
 
-	protected function _before() {
+	protected function _before()
+	{
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
 		$this->hydrator->addArrayAdapter(new JoinArrayAdapter(new PropertyAccessor()));
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
 	// tests
-	public function testSomeFeature() {
+	public function testSomeFeature()
+	{
 		$simple = new Simple('foo', 'bar');
 		$simple->setId(1);
 		$manyToOne = new ManyToOne($simple);

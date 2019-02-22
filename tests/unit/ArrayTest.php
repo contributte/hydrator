@@ -1,9 +1,10 @@
 <?php
 
-use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
-use WebChemistry\DoctrineHydration\Hydration;
+use Nettrine\DoctrineHydration\Factories\MetadataFactory;
+use Nettrine\DoctrineHydration\Hydration;
 
-class ArrayTest extends \Codeception\Test\Unit {
+class ArrayTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
@@ -15,16 +16,19 @@ class ArrayTest extends \Codeception\Test\Unit {
 	 */
 	protected $hydrator;
 
-	protected function _before() {
+	protected function _before()
+	{
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
 	// tests
-	public function testSimple() {
+	public function testSimple()
+	{
 		/** @var Simple $obj */
 		$obj = $this->hydrator->toFields(Simple::class, [
 			'name' => 'foo',

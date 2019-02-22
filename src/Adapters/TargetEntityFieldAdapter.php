@@ -1,25 +1,29 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Adapters;
+namespace Nettrine\DoctrineHydration\Adapters;
 
 use Doctrine\ORM\EntityManagerInterface;
-use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
-use WebChemistry\DoctrineHydration\Helpers\RecursiveHydration;
+use Nettrine\DoctrineHydration\Arguments\FieldArgs;
+use Nettrine\DoctrineHydration\Helpers\RecursiveHydration;
 
-class TargetEntityFieldAdapter implements IFieldAdapter {
+class TargetEntityFieldAdapter implements IFieldAdapter
+{
 
 	/** @var EntityManagerInterface */
 	private $em;
 
-	public function __construct(EntityManagerInterface $em) {
+	public function __construct(EntityManagerInterface $em)
+	{
 		$this->em = $em;
 	}
 
-	public function isWorkable(FieldArgs $args): bool {
+	public function isWorkable(FieldArgs $args): bool
+	{
 		return isset($args->metadata->getMapping($args->field)['targetEntity']);
 	}
 
-	public function work(FieldArgs $args): void {
+	public function work(FieldArgs $args): void
+	{
 		$targetEntity = $args->metadata->getMapping($args->field)['targetEntity'];
 
 		if ($args->value instanceof $targetEntity) {

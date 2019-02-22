@@ -1,10 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Adapters;
+namespace Nettrine\DoctrineHydration\Adapters;
 
-use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
+use Nettrine\DoctrineHydration\Arguments\FieldArgs;
 
-interface IFieldAdapter {
+interface IFieldAdapter
+{
 
 	public function isWorkable(FieldArgs $args): bool;
 

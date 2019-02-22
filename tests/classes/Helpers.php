@@ -1,12 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Test;
+namespace Nettrine\Test;
 
 use ReflectionProperty;
 
-final class Helpers {
+final class Helpers
+{
 
-	public static function resetProperty($object, string $property, $value) {
+	public static function resetProperty($object, string $property, $value)
+	{
 		$reflectionProperty = new ReflectionProperty($object, $property);
 
 		$reflectionProperty->setAccessible(true);

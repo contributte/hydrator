@@ -1,14 +1,14 @@
 <?php
 
 use Doctrine\ORM\EntityManagerInterface;
-use WebChemistry\DoctrineHydration\Adapters\TargetEntityFieldAdapter;
-use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
-use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
-use WebChemistry\DoctrineHydration\Hydration;
-use WebChemistry\DoctrineHydration\Metadata;
-use WebChemistry\Test\Helpers;
+use Nettrine\DoctrineHydration\Adapters\TargetEntityFieldAdapter;
+use Nettrine\DoctrineHydration\Arguments\FieldArgs;
+use Nettrine\DoctrineHydration\Factories\MetadataFactory;
+use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\Test\Helpers;
 
-class TargetEntityFieldTest extends \Codeception\Test\Unit {
+class TargetEntityFieldTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
@@ -26,19 +26,23 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit {
 
 	public $obj;
 
-	protected function _before() {
+	protected function _before()
+	{
 		$this->em = $em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
-		$this->hydrator->addFieldAdapter(new class($em, $this) extends TargetEntityFieldAdapter {
+		$this->hydrator->addFieldAdapter(new class($em, $this) extends TargetEntityFieldAdapter
+		{
 
 			private $self;
 
-			public function __construct(EntityManagerInterface $em, $self) {
+			public function __construct(EntityManagerInterface $em, $self)
+			{
 				parent::__construct($em);
 				$this->self = $self;
 			}
 
-			public function work(FieldArgs $args): void {
+			public function work(FieldArgs $args): void
+			{
 				$this->self->called = [$args->field, $args->value];
 
 				$args->value = $this->self->obj = new Simple('foo', 'bar');
@@ -46,11 +50,13 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit {
 		});
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
 	// tests
-	public function testTargetEntity() {
+	public function testTargetEntity()
+	{
 		/** @var ManyToOne $obj */
 		$obj = $this->hydrator->toFields(ManyToOne::class, [
 			'simple' => 15,
@@ -61,7 +67,8 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit {
 		$this->assertSame($obj->getSimple(), $this->obj);
 	}
 
-	public function testArray() {
+	public function testArray()
+	{
 		Helpers::resetProperty($this->hydrator, 'fieldAdapters', []);
 		$this->hydrator->addFieldAdapter(new TargetEntityFieldAdapter($this->em));
 

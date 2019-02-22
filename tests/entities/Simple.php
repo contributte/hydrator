@@ -1,13 +1,14 @@
 <?php declare(strict_types = 1);
 
-use WebChemistry\DoctrineHydration\MagicHydration;
+use Nettrine\DoctrineHydration\TMagicHydration;
 
 /**
  * @Entity()
  */
-class Simple {
+class Simple
+{
 
-	use MagicHydration;
+	use TMagicHydration;
 
 	/**
 	 * @var int
@@ -35,7 +36,8 @@ class Simple {
 	 */
 	protected $nullable;
 
-	public function __construct(string $name, string $position, ?int $nullable = null) {
+	public function __construct(string $name, string $position, ?int $nullable = null)
+	{
 		$this->name = $name;
 		$this->position = $position;
 		$this->nullable = $nullable;
@@ -44,46 +46,53 @@ class Simple {
 	/**
 	 * @param int $id
 	 */
-	public function setId(int $id): void {
+	public function setId(int $id): void
+	{
 		$this->id = $id;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getName(): string {
+	public function getName(): string
+	{
 		return $this->name;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getPosition(): string {
+	public function getPosition(): string
+	{
 		return $this->position;
 	}
 
 	/**
 	 * @return int|null
 	 */
-	public function getNullable(): ?int {
+	public function getNullable(): ?int
+	{
 		return $this->nullable;
 	}
 
-	public function getId() {
+	public function getId()
+	{
 		return $this->id;
 	}
 
 	/**
 	 * @param string $position
 	 */
-	public function setPosition(string $position): void {
+	public function setPosition(string $position): void
+	{
 		$this->position = $position;
 	}
 
 	/**
 	 * @param int|null $nullable
 	 */
-	public function setNullable(?int $nullable): void {
+	public function setNullable(?int $nullable): void
+	{
 		$this->nullable = $nullable;
 	}
 

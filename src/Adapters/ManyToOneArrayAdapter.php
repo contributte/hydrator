@@ -1,12 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration\Adapters;
+namespace Nettrine\DoctrineHydration\Adapters;
 
 use Doctrine\ORM\EntityManagerInterface;
-use WebChemistry\DoctrineHydration\Arguments\ArrayArgs;
-use WebChemistry\DoctrineHydration\IPropertyAccessor;
+use Nettrine\DoctrineHydration\Arguments\ArrayArgs;
+use Nettrine\DoctrineHydration\IPropertyAccessor;
 
-class ManyToOneArrayAdapter implements IArrayAdapter {
+class ManyToOneArrayAdapter implements IArrayAdapter
+{
 
 	/** @var EntityManagerInterface */
 	private $em;
@@ -14,16 +15,19 @@ class ManyToOneArrayAdapter implements IArrayAdapter {
 	/** @var IPropertyAccessor */
 	private $propertyAccessor;
 
-	public function __construct(EntityManagerInterface $em, IPropertyAccessor $propertyAccessor) {
+	public function __construct(EntityManagerInterface $em, IPropertyAccessor $propertyAccessor)
+	{
 		$this->em = $em;
 		$this->propertyAccessor = $propertyAccessor;
 	}
 
-	public function isWorkable(ArrayArgs $args): bool {
+	public function isWorkable(ArrayArgs $args): bool
+	{
 		return $args->metadata->isManyToOne($args->field);
 	}
 
-	public function work(ArrayArgs $args): void {
+	public function work(ArrayArgs $args): void
+	{
 		if (is_object($args->value)) {
 			$metadata = $this->em->getClassMetadata($args->metadata->getAssociationTargetClass($args->field));
 			$id = $metadata->getIdentifier()[0];

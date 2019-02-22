@@ -1,16 +1,17 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\DoctrineHydration;
+namespace Nettrine\DoctrineHydration;
 
 use Nette\SmartObject;
-use WebChemistry\DoctrineHydration\Adapters\IArrayAdapter;
-use WebChemistry\DoctrineHydration\Adapters\IFieldAdapter;
-use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
-use WebChemistry\DoctrineHydration\Arguments\ArrayArgs;
-use WebChemistry\DoctrineHydration\Factories\IMetadataFactory;
-use WebChemistry\DoctrineHydration\Helpers\RecursiveHydration;
+use Nettrine\DoctrineHydration\Adapters\IArrayAdapter;
+use Nettrine\DoctrineHydration\Adapters\IFieldAdapter;
+use Nettrine\DoctrineHydration\Arguments\ArrayArgs;
+use Nettrine\DoctrineHydration\Arguments\FieldArgs;
+use Nettrine\DoctrineHydration\Factories\IMetadataFactory;
+use Nettrine\DoctrineHydration\Helpers\RecursiveHydration;
 
-class Hydration implements IHydration {
+class Hydration implements IHydration
+{
 
 	use SmartObject;
 
@@ -26,25 +27,33 @@ class Hydration implements IHydration {
 	/** @var IPropertyAccessor */
 	private $propertyAccessor;
 
-	public function __construct(IMetadataFactory $metadataFactory, ?IPropertyAccessor $propertyAccessor = null) {
+	public function __construct(IMetadataFactory $metadataFactory, ?IPropertyAccessor $propertyAccessor = null)
+	{
 		$this->metadataFactory = $metadataFactory;
 		$this->propertyAccessor = $propertyAccessor ?: new PropertyAccessor();
 	}
 
-	public function addFieldAdapter(IFieldAdapter $adapter): self {
+	public function addFieldAdapter(IFieldAdapter $adapter): self
+	{
 		$this->fieldAdapters[] = $adapter;
 
 		return $this;
 	}
 
-	public function addArrayAdapter(IArrayAdapter $adapter): self {
+	public function addArrayAdapter(IArrayAdapter $adapter): self
+	{
 		$this->arrayAdapters[] = $adapter;
 
 		return $this;
 	}
 
-
-	public function toArray(object $object, array $settings = []): array {
+	/**
+	 * @param mixed[] $settings
+	 * @return mixed[]
+	 * @throws PropertyAccessException
+	 */
+	public function toArray(object $object, array $settings = []): array
+	{
 		$metadata = $this->metadataFactory->create($object);
 
 		$values = [];
@@ -64,7 +73,8 @@ class Hydration implements IHydration {
 	 * @throws HydrationException
 	 * @throws PropertyAccessException
 	 */
-	public function toFields($object, iterable $values, array $settings = []): object {
+	public function toFields($object, iterable $values, array $settings = []): object
+	{
 		$metadata = $this->metadataFactory->create($object);
 		$values = Tools::toArray($values);
 
@@ -73,7 +83,7 @@ class Hydration implements IHydration {
 			$constructValues = $metadata->getConstructorValues();
 			if ($constructValues) {
 				$args = [];
-				foreach ($constructValues as list($field, $optional, $default)) {
+				foreach ($constructValues as [$field, $optional, $default]) {
 					if (array_key_exists($field, $values)) {
 						$args[] = $this->getFieldValue(null, $field, $metadata, $values, $settings);
 
@@ -106,14 +116,12 @@ class Hydration implements IHydration {
 	}
 
 	/**
-	 * @param object|null $object
-	 * @param string $field
-	 * @param Metadata $metadata
-	 * @param array $values
-	 * @param array $settings
+	 * @param mixed[] $values
+	 * @param mixed[] $settings
 	 * @return mixed
 	 */
-	protected function getFieldValue(?object $object, string $field, Metadata $metadata, array $values, array $settings) {
+	protected function getFieldValue(?object $object, string $field, Metadata $metadata, array $values, array $settings)
+	{
 		$value = $values[$field];
 		foreach ($this->fieldAdapters as $adapter) {
 			$args = new FieldArgs($object, $field, $values, $metadata, $settings);
@@ -135,7 +143,8 @@ class Hydration implements IHydration {
 	 * @param mixed $value
 	 * @param mixed[] $settings
 	 */
-	protected function getArrayValue(array &$values, object $object, $value, string $field, Metadata $metadata, array $settings): void {
+	protected function getArrayValue(array &$values, object $object, $value, string $field, Metadata $metadata, array $settings): void
+	{
 		$values[$field] = $value;
 		foreach ($this->arrayAdapters as $adapter) {
 			$args = new ArrayArgs($values, $object, $value, $field, $metadata, $settings);

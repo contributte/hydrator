@@ -1,11 +1,12 @@
 <?php
 
-use WebChemistry\DoctrineHydration\Adapters\CallbackFieldAdapter;
-use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
-use WebChemistry\DoctrineHydration\Hydration;
-use WebChemistry\DoctrineHydration\SkipValueException;
+use Nettrine\DoctrineHydration\Adapters\CallbackFieldAdapter;
+use Nettrine\DoctrineHydration\Factories\MetadataFactory;
+use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\DoctrineHydration\SkipValueException;
 
-class CallbackFieldTest extends \Codeception\Test\Unit {
+class CallbackFieldTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
@@ -17,17 +18,20 @@ class CallbackFieldTest extends \Codeception\Test\Unit {
 	 */
 	protected $hydrator;
 
-	protected function _before() {
+	protected function _before()
+	{
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
 		$this->hydrator = new Hydration(new MetadataFactory($em));
 		$this->hydrator->addFieldAdapter(new CallbackFieldAdapter());
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
 	// tests
-	public function testCallback() {
+	public function testCallback()
+	{
 		/** @var Simple $obj */
 		$obj = $this->hydrator->toFields(Simple::class, [
 			'name' => 'foo',
@@ -39,8 +43,8 @@ class CallbackFieldTest extends \Codeception\Test\Unit {
 					$this->assertSame('foo', $value);
 
 					return 'bar';
-				}
-			]
+				},
+			],
 		]);
 
 		$this->assertSame($obj->getName(), 'bar');

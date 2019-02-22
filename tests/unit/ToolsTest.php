@@ -1,29 +1,33 @@
 <?php
 
-use WebChemistry\DoctrineHydration\Tools;
-use WebChemistry\Test\ConstructorValues;
-use WebChemistry\Test\SettersGetters;
+use Nettrine\DoctrineHydration\Tools;
+use Nettrine\Test\ConstructorValues;
 
-class ToolsTest extends \Codeception\Test\Unit {
+class ToolsTest extends \Codeception\Test\Unit
+{
 
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
 
-	protected function _before() {
+	protected function _before()
+	{
 	}
 
-	protected function _after() {
+	protected function _after()
+	{
 	}
 
-	public function testReflectionClass(): void {
+	public function testReflectionClass(): void
+	{
 		$reflection = Tools::reflectionClass(self::class);
 
 		$this->assertSame($reflection, Tools::reflectionClass(self::class));
 	}
 
-	public function testConstructorValues(): void {
+	public function testConstructorValues(): void
+	{
 		$values = Tools::constructorValues(ConstructorValues::class);
 
 		$this->assertSame([

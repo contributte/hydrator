@@ -1,5 +1,5 @@
 {
-	"name": "webchemistry/doctrine-hydration",
+	"name": "nettrine/doctrine-hydration",
 	"type": "library",
 	"require": {
 		"php": ">= 7.2",
@@ -8,23 +8,40 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"WebChemistry\\DoctrineHydration\\": ["src/"]
+			"Nettrine\\DoctrineHydration\\": ["src/"]
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"WebChemistry\\Test\\": ["tests/classes/"],
+			"Nettrine\\Test\\": ["tests/classes/"],
 			"": ["tests/entities/"]
 		}
 	},
-	"minimum-stability": "dev",
 	"require-dev": {
-		"phpstan/phpstan": "^0.11.0@dev",
-		"codeception/codeception": "2.5.x-dev",
-		"nette/di": "~2.4.14"
+		"ninjify/qa": "^0.8.0",
+		"ninjify/nunjuck": "^0.2.0",
+		"phpstan/phpstan": "^0.11.0",
+		"codeception/codeception": "^2.5",
+		"nette/di": "^3.0"
 	},
+	"minimum-stability": "RC",
 	"scripts": {
-		"stan": "vendor/bin/phpstan analyse src --level=7",
-		"test": "vendor/bin/codecept run"
+		"qa": [
+			"linter src tests",
+			"codesniffer src tests"
+		],
+		"tests": [
+			"vendor/bin/codecept run"
+		],
+		"phpstan-install": [
+			"mkdir -p temp/phpstan",
+			"composer require -d temp/phpstan phpstan/phpstan:^0.10",
+			"composer require -d temp/phpstan phpstan/phpstan-deprecation-rules:^0.10",
+			"composer require -d temp/phpstan phpstan/phpstan-nette:^0.10",
+			"composer require -d temp/phpstan phpstan/phpstan-strict-rules:^0.10"
+		],
+		"phpstan": [
+			"temp/phpstan/vendor/bin/phpstan analyse -l max src"
+		]
 	}
 }
