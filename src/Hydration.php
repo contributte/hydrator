@@ -5,6 +5,8 @@ namespace WebChemistry\DoctrineHydration;
 use Nette\SmartObject;
 use WebChemistry\DoctrineHydration\Adapters\IArrayAdapter;
 use WebChemistry\DoctrineHydration\Adapters\IFieldAdapter;
+use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
+use WebChemistry\DoctrineHydration\Arguments\ArrayArgs;
 use WebChemistry\DoctrineHydration\Factories\IMetadataFactory;
 use WebChemistry\DoctrineHydration\Helpers\RecursiveHydration;
 
@@ -29,43 +31,40 @@ class Hydration implements IHydration {
 		$this->propertyAccessor = $propertyAccessor ?: new PropertyAccessor();
 	}
 
-	public function addFieldAdapter(IFieldAdapter $adapter) {
+	public function addFieldAdapter(IFieldAdapter $adapter): self {
 		$this->fieldAdapters[] = $adapter;
 
 		return $this;
 	}
 
-	public function addArrayAdapter(IArrayAdapter $adapter) {
+	public function addArrayAdapter(IArrayAdapter $adapter): self {
 		$this->arrayAdapters[] = $adapter;
 
 		return $this;
 	}
 
-	/**
-	 * @param object|null $object
-	 * @param string $field
-	 * @param Metadata $metadata
-	 * @param array $values
-	 * @param array $settings
-	 * @return mixed
-	 * @throws SkipValueException From adapters for skip
-	 */
-	protected function getFieldValue($object, string $field, Metadata $metadata, array $values, array $settings) {
-		foreach ($this->fieldAdapters as $adapter) {
-			if ($adapter->isWorkable($object, $field, $metadata, $settings)) {
-				$value = $adapter->work($object, $field, $values[$field], $metadata, $settings);
-				if ($value instanceof RecursiveHydration) {
-					$value = $this->toFields($value->getObject(), $value->getValues(), $value->getSettings());
-				}
 
-				return $value;
-			}
+	public function toArray(object $object, array $settings = []): array {
+		$metadata = $this->metadataFactory->create($object);
+
+		$values = [];
+		foreach ($metadata->getFields() as $field) {
+			$value = $this->propertyAccessor->get($object, $field);
+
+			$this->getArrayValue($values, $object, $value, $field, $metadata, $settings);
 		}
 
-		return $values[$field];
+		return $values;
 	}
 
-	public function toFields($object, iterable $values, array $settings = []) {
+	/**
+	 * @param string|object $object
+	 * @param mixed[] $values
+	 * @param mixed[] $settings
+	 * @throws HydrationException
+	 * @throws PropertyAccessException
+	 */
+	public function toFields($object, iterable $values, array $settings = []): object {
 		$metadata = $this->metadataFactory->create($object);
 		$values = Tools::toArray($values);
 
@@ -76,9 +75,7 @@ class Hydration implements IHydration {
 				$args = [];
 				foreach ($constructValues as list($field, $optional, $default)) {
 					if (array_key_exists($field, $values)) {
-						try {
-							$args[] = $this->getFieldValue(null, $field, $metadata, $values, $settings);
-						} catch (SkipValueException $e) {}
+						$args[] = $this->getFieldValue(null, $field, $metadata, $values, $settings);
 
 						unset($values[$field]);
 					} else {
@@ -100,52 +97,54 @@ class Hydration implements IHydration {
 			if (!array_key_exists($field, $values)) {
 				continue;
 			}
-			try {
-				$value = $this->getFieldValue($object, $field, $metadata, $values, $settings);
+			$value = $this->getFieldValue($object, $field, $metadata, $values, $settings);
 
-				$this->propertyAccessor->set($object, $field, $value);
-			} catch (SkipValueException $e) {}
+			$this->propertyAccessor->set($object, $field, $value);
 		}
 
 		return $object;
 	}
 
 	/**
-	 * @param object $object
-	 * @param mixed $value
+	 * @param object|null $object
 	 * @param string $field
 	 * @param Metadata $metadata
+	 * @param array $values
 	 * @param array $settings
 	 * @return mixed
-	 * @throws SkipValueException
 	 */
-	protected function getArrayValue($object, $value, string $field, Metadata $metadata, array $settings) {
-		foreach ($this->arrayAdapters as $adapter) {
-			if ($adapter->isWorkable($object, $field, $metadata, $settings)) {
-				$value = $adapter->work($object, $field, $value, $metadata, $settings);
+	protected function getFieldValue(?object $object, string $field, Metadata $metadata, array $values, array $settings) {
+		$value = $values[$field];
+		foreach ($this->fieldAdapters as $adapter) {
+			$args = new FieldArgs($object, $field, $values, $metadata, $settings);
+			if ($adapter->isWorkable($args)) {
+				$adapter->work($args);
+				$value = $args->value;
 
-				// TODO: rehydrate
-
-				return $value;
+				if ($value instanceof RecursiveHydration) {
+					$value = $this->toFields($value->getObject(), $value->getValues(), $value->getSettings());
+				}
 			}
 		}
 
 		return $value;
 	}
 
-	public function toArray($object, array $settings = []): array {
-		$metadata = $this->metadataFactory->create($object);
+	/**
+	 * @param mixed[] $values
+	 * @param mixed $value
+	 * @param mixed[] $settings
+	 */
+	protected function getArrayValue(array &$values, object $object, $value, string $field, Metadata $metadata, array $settings): void {
+		$values[$field] = $value;
+		foreach ($this->arrayAdapters as $adapter) {
+			$args = new ArrayArgs($values, $object, $value, $field, $metadata, $settings);
+			if ($adapter->isWorkable($args)) {
+				$adapter->work($args);
 
-		$values = [];
-		foreach ($metadata->getFields() as $field) {
-			try {
-				$value = $this->propertyAccessor->get($object, $field);
-
-				$values[$field] = $this->getArrayValue($object, $value, $field, $metadata, $settings);
-			} catch (SkipValueException $e) {}
+				// TODO: rehydrate
+			}
 		}
-
-		return $values;
 	}
 
 }

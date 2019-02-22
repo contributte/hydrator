@@ -3,9 +3,8 @@
 namespace WebChemistry\DoctrineHydration\Adapters;
 
 use Doctrine\ORM\EntityManagerInterface;
+use WebChemistry\DoctrineHydration\Arguments\ArrayArgs;
 use WebChemistry\DoctrineHydration\IPropertyAccessor;
-use WebChemistry\DoctrineHydration\Metadata;
-use WebChemistry\DoctrineHydration\Tools;
 
 class ManyToOneArrayAdapter implements IArrayAdapter {
 
@@ -20,19 +19,17 @@ class ManyToOneArrayAdapter implements IArrayAdapter {
 		$this->propertyAccessor = $propertyAccessor;
 	}
 
-	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
-		return $metadata->isManyToOne($field);
+	public function isWorkable(ArrayArgs $args): bool {
+		return $args->metadata->isManyToOne($args->field);
 	}
 
-	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
-		if (!is_object($value)) {
-			return $value;
+	public function work(ArrayArgs $args): void {
+		if (is_object($args->value)) {
+			$metadata = $this->em->getClassMetadata($args->metadata->getAssociationTargetClass($args->field));
+			$id = $metadata->getIdentifier()[0];
+
+			$args->setValue($this->propertyAccessor->get($args->value, $id));
 		}
-
-		$metadata = $this->em->getClassMetadata($metadata->getAssociationTargetClass($field));
-		$id = $metadata->getIdentifier()[0];
-
-		return $this->propertyAccessor->get($value, $id);
 	}
 
 }

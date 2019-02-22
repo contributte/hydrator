@@ -6,6 +6,9 @@ use WebChemistry\DoctrineHydration\Metadata;
 
 interface IMetadataFactory {
 
+	/**
+	 * @param object|string $object
+	 */
 	public function create($object): Metadata;
 
 }

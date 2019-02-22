@@ -11,8 +11,13 @@ interface IHydration {
 
 	public function addArrayAdapter(IArrayAdapter $adapter);
 
-	public function toFields($object, iterable $values, array $settings = []);
+	/**
+	 * @param string|object $object
+	 * @param mixed[] $values
+	 * @param mixed[] $settings
+	 */
+	public function toFields($object, iterable $values, array $settings = []): object;
 
-	public function toArray($object, array $settings = []): array;
+	public function toArray(object $object, array $settings = []): array;
 
 }

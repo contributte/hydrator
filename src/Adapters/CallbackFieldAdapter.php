@@ -2,16 +2,16 @@
 
 namespace WebChemistry\DoctrineHydration\Adapters;
 
-use WebChemistry\DoctrineHydration\Metadata;
+use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
 
 class CallbackFieldAdapter implements IFieldAdapter {
 
-	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
-		return isset($settings['callbacks'][$field]);
+	public function isWorkable(FieldArgs $args): bool {
+		return $args->hasSettingsSection('callbacks');
 	}
 
-	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
-		return $settings['callbacks'][$field]($value);
+	public function work(FieldArgs $args): void {
+		$args->value = $args->getSettingsSection('callbacks')($args->value, $args);
 	}
 
 }

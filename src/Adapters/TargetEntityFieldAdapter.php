@@ -3,8 +3,8 @@
 namespace WebChemistry\DoctrineHydration\Adapters;
 
 use Doctrine\ORM\EntityManagerInterface;
+use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
 use WebChemistry\DoctrineHydration\Helpers\RecursiveHydration;
-use WebChemistry\DoctrineHydration\Metadata;
 
 class TargetEntityFieldAdapter implements IFieldAdapter {
 
@@ -15,26 +15,26 @@ class TargetEntityFieldAdapter implements IFieldAdapter {
 		$this->em = $em;
 	}
 
-	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
-		return isset($metadata->getMapping($field)['targetEntity']);
+	public function isWorkable(FieldArgs $args): bool {
+		return isset($args->metadata->getMapping($args->field)['targetEntity']);
 	}
 
-	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
-		$targetEntity = $metadata->getMapping($field)['targetEntity'];
+	public function work(FieldArgs $args): void {
+		$targetEntity = $args->metadata->getMapping($args->field)['targetEntity'];
 
-		if ($value instanceof $targetEntity) {
-			return $value;
+		if ($args->value instanceof $targetEntity) {
+			return;
 		}
-		if ($value === null) {
-			return null;
+		if ($args->value === null) {
+			return;
 		}
-		if (is_array($value)) {
+		if (is_array($args->value)) {
 			// TODO: settings
-
-			return new RecursiveHydration($targetEntity, $value);
+			$args->value = new RecursiveHydration($targetEntity, $args->value);
+			return;
 		}
 
-		return $this->em->getRepository($targetEntity)->find($value);
+		$args->value = $this->em->getRepository($targetEntity)->find($args->value);
 	}
 
 }

@@ -2,6 +2,7 @@
 
 use Doctrine\ORM\EntityManagerInterface;
 use WebChemistry\DoctrineHydration\Adapters\TargetEntityFieldAdapter;
+use WebChemistry\DoctrineHydration\Arguments\FieldArgs;
 use WebChemistry\DoctrineHydration\Factories\MetadataFactory;
 use WebChemistry\DoctrineHydration\Hydration;
 use WebChemistry\DoctrineHydration\Metadata;
@@ -37,10 +38,10 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit {
 				$this->self = $self;
 			}
 
-			public function work($object, string $field, $value, Metadata $metadata, array $settings) {
-				$this->self->called = [$field, $value];
+			public function work(FieldArgs $args): void {
+				$this->self->called = [$args->field, $args->value];
 
-				return $this->self->obj = new Simple('foo', 'bar');
+				$args->value = $this->self->obj = new Simple('foo', 'bar');
 			}
 		});
 	}

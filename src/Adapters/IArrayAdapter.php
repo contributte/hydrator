@@ -2,27 +2,12 @@
 
 namespace WebChemistry\DoctrineHydration\Adapters;
 
-use WebChemistry\DoctrineHydration\Metadata;
+use WebChemistry\DoctrineHydration\Arguments\ArrayArgs;
 
 interface IArrayAdapter {
 
-	/**
-	 * @param object $object
-	 * @param string $field
-	 * @param Metadata $metadata
-	 * @param array $settings
-	 * @return bool
-	 */
-	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool;
+	public function isWorkable(ArrayArgs $args): bool;
 
-	/**
-	 * @param object $object
-	 * @param string $field
-	 * @param mixed $value
-	 * @param Metadata $metadata
-	 * @param array $settings
-	 * @return mixed
-	 */
-	public function work($object, string $field, $value, Metadata $metadata, array $settings);
+	public function work(ArrayArgs $args): void;
 
 }

@@ -2,8 +2,9 @@
 	"name": "webchemistry/doctrine-hydration",
 	"type": "library",
 	"require": {
-		"php": ">= 7.1",
-		"doctrine/orm": "^2.6.0"
+		"php": ">= 7.2",
+		"doctrine/orm": "^2.6.0",
+		"prowebcraft/dot": "^0.1.0"
 	},
 	"autoload": {
 		"psr-4": {

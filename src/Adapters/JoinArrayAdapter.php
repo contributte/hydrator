@@ -2,8 +2,8 @@
 
 namespace WebChemistry\DoctrineHydration\Adapters;
 
+use WebChemistry\DoctrineHydration\Arguments\ArrayArgs;
 use WebChemistry\DoctrineHydration\IPropertyAccessor;
-use WebChemistry\DoctrineHydration\Metadata;
 
 class JoinArrayAdapter implements IArrayAdapter {
 
@@ -14,16 +14,14 @@ class JoinArrayAdapter implements IArrayAdapter {
 		$this->propertyAccessor = $propertyAccessor;
 	}
 
-	public function isWorkable($object, string $field, Metadata $metadata, array $settings): bool {
-		return isset($settings['joins'][$field]);
+	public function isWorkable(ArrayArgs $args): bool {
+		return $args->hasSettingsSection('joins');
 	}
 
-	public function work($object, string $field, $value, Metadata $metadata, array $settings) {
-		if (!is_object($value)) {
-			return $value;
+	public function work(ArrayArgs $args): void {
+		if (is_object($args->value)) {
+			$args->setValue($this->propertyAccessor->get($args->value, $args->getSettingsSection('joins')));
 		}
-
-		return $this->propertyAccessor->get($value, $settings['joins'][$field]);
 	}
 
 }

@@ -17,6 +17,11 @@ class RecursiveHydration {
 	/** @var array */
 	private $settings;
 
+	/**
+	 * @param object|string $object
+	 * @param mixed[] $values
+	 * @param mixed[] $settings
+	 */
 	public function __construct($object, array $values, array $settings = []) {
 		$this->object = $object;
 		$this->values = $values;
@@ -31,14 +36,14 @@ class RecursiveHydration {
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function getSettings(): array {
 		return $this->settings;
 	}
 
 	/**
-	 * @return array
+	 * @return mixed[]
 	 */
 	public function getValues(): array {
 		return $this->values;
