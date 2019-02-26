@@ -1,18 +1,18 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\DI;
+namespace Nettrine\Hydrator\DI;
 
 use Nette\DI\CompilerExtension;
-use Nettrine\DoctrineHydration\Adapters\IArrayAdapter;
-use Nettrine\DoctrineHydration\Adapters\IFieldAdapter;
-use Nettrine\DoctrineHydration\Factories\IMetadataFactory;
-use Nettrine\DoctrineHydration\Factories\MetadataFactory;
-use Nettrine\DoctrineHydration\Hydration;
-use Nettrine\DoctrineHydration\IHydration;
-use Nettrine\DoctrineHydration\IPropertyAccessor;
-use Nettrine\DoctrineHydration\PropertyAccessor;
+use Nettrine\Hydrator\Adapters\IArrayAdapter;
+use Nettrine\Hydrator\Adapters\IFieldAdapter;
+use Nettrine\Hydrator\Factories\IMetadataFactory;
+use Nettrine\Hydrator\Factories\MetadataFactory;
+use Nettrine\Hydrator\Hydration;
+use Nettrine\Hydrator\IHydration;
+use Nettrine\Hydrator\IPropertyAccessor;
+use Nettrine\Hydrator\PropertyAccessor;
 
-class HydrationExtension extends CompilerExtension
+class HydratorExtension extends CompilerExtension
 {
 
 	/** @var mixed[] */

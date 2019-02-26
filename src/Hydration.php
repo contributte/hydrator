@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration;
+namespace Nettrine\Hydrator;
 
 use Nette\SmartObject;
-use Nettrine\DoctrineHydration\Adapters\IArrayAdapter;
-use Nettrine\DoctrineHydration\Adapters\IFieldAdapter;
-use Nettrine\DoctrineHydration\Arguments\ArrayArgs;
-use Nettrine\DoctrineHydration\Arguments\FieldArgs;
-use Nettrine\DoctrineHydration\Factories\IMetadataFactory;
-use Nettrine\DoctrineHydration\Helpers\RecursiveHydration;
+use Nettrine\Hydrator\Adapters\IArrayAdapter;
+use Nettrine\Hydrator\Adapters\IFieldAdapter;
+use Nettrine\Hydrator\Arguments\ArrayArgs;
+use Nettrine\Hydrator\Arguments\FieldArgs;
+use Nettrine\Hydrator\Factories\IMetadataFactory;
+use Nettrine\Hydrator\Helpers\RecursiveHydration;
 
 class Hydration implements IHydration
 {

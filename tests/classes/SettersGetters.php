@@ -2,7 +2,7 @@
 
 namespace Nettrine\Test;
 
-use Nettrine\DoctrineHydration\TMagicHydration;
+use Nettrine\Hydrator\TMagicHydration;
 
 class SettersGetters
 {

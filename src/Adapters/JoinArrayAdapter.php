@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\Adapters;
+namespace Nettrine\Hydrator\Adapters;
 
-use Nettrine\DoctrineHydration\Arguments\ArrayArgs;
-use Nettrine\DoctrineHydration\IPropertyAccessor;
+use Nettrine\Hydrator\Arguments\ArrayArgs;
+use Nettrine\Hydrator\IPropertyAccessor;
 
 class JoinArrayAdapter implements IArrayAdapter
 {

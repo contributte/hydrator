@@ -1,12 +1,12 @@
 ## Entity to array and conversely
 
-[![Build Status](https://travis-ci.org/Nettrine/doctrine-hydration.svg?branch=master)](https://travis-ci.org/Nettrine/doctrine-hydration)
+[![Build Status](https://travis-ci.org/Nettrine/hydrator.svg?branch=master)](https://travis-ci.org/Nettrine/hydrator)
 
 ## Nette instalace
 
 ```yaml
 extensions:
-    hydration: Nettrine\DoctrineHydration
+    hydrator: Nettrine\Hydrator\DI\HydratorExtension
 ```
 
 ## Základní použití
@@ -45,7 +45,7 @@ class CustomPropertyAccessor implements IPropertyAccessor {
 
 Nette registrace:
 ```yaml
-hydration:
+hydrator:
     propertyAccessor: CustomPropertyAccessor
 ```
 
@@ -59,7 +59,7 @@ Všechny adaptéry se musí zaregistrovat přes addFieldAdapter nebo addArrayAda
 V nette:
 
 ```yaml
-hydration:
+hydrator:
     adapters:
         fields:
             - Nettrine\DoctrineHydration\Adapters\CallbackFieldAdapter
@@ -200,7 +200,7 @@ class CustomFieldAdapter implements IFieldAdapter {
 Registrace v nette:
 
 ```yaml
-hydration:
+hydrator:
     adapters:
         fields: 
             - CustomFieldAdapter

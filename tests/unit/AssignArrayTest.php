@@ -1,8 +1,8 @@
 <?php
 
-use Nettrine\DoctrineHydration\Adapters\AssignArrayAdapter;
-use Nettrine\DoctrineHydration\Factories\MetadataFactory;
-use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\Hydrator\Adapters\AssignArrayAdapter;
+use Nettrine\Hydrator\Factories\MetadataFactory;
+use Nettrine\Hydrator\Hydration;
 
 class AssignArrayTest extends \Codeception\Test\Unit
 {

@@ -1,7 +1,7 @@
 <?php
 
-use Nettrine\DoctrineHydration\Factories\MetadataFactory;
-use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\Hydrator\Factories\MetadataFactory;
+use Nettrine\Hydrator\Hydration;
 
 class ArrayTest extends \Codeception\Test\Unit
 {

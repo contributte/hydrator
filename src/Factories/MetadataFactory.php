@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\Factories;
+namespace Nettrine\Hydrator\Factories;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Nette\SmartObject;
-use Nettrine\DoctrineHydration\Metadata;
+use Nettrine\Hydrator\Metadata;
 
 class MetadataFactory implements IMetadataFactory
 {

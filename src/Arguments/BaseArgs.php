@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\Arguments;
+namespace Nettrine\Hydrator\Arguments;
 
 use Nette\SmartObject;
-use Nettrine\DoctrineHydration\Metadata;
+use Nettrine\Hydrator\Metadata;
 
 /**
  * @property-read Metadata $metadata

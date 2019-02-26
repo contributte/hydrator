@@ -12,11 +12,4 @@ script:
   # Tests
   - composer run-script test
 
-jobs:
-  include:
-    - stage: Phpstan
-      php: 7.1
-      script:
-        - composer run-script stan
-
 sudo: false

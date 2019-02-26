@@ -1,9 +1,9 @@
 <?php
 
-use Nettrine\DoctrineHydration\Adapters\CallbackFieldAdapter;
-use Nettrine\DoctrineHydration\Factories\MetadataFactory;
-use Nettrine\DoctrineHydration\Hydration;
-use Nettrine\DoctrineHydration\SkipValueException;
+use Nettrine\Hydrator\Adapters\CallbackFieldAdapter;
+use Nettrine\Hydrator\Factories\MetadataFactory;
+use Nettrine\Hydrator\Hydration;
+use Nettrine\Hydrator\SkipValueException;
 
 class CallbackFieldTest extends \Codeception\Test\Unit
 {

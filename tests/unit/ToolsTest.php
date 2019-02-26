@@ -1,6 +1,6 @@
 <?php
 
-use Nettrine\DoctrineHydration\Tools;
+use Nettrine\Hydrator\Tools;
 use Nettrine\Test\ConstructorValues;
 
 class ToolsTest extends \Codeception\Test\Unit

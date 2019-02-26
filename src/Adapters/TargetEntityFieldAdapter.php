@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\Adapters;
+namespace Nettrine\Hydrator\Adapters;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Nettrine\DoctrineHydration\Arguments\FieldArgs;
-use Nettrine\DoctrineHydration\Helpers\RecursiveHydration;
+use Nettrine\Hydrator\Arguments\FieldArgs;
+use Nettrine\Hydrator\Helpers\RecursiveHydration;
 
 class TargetEntityFieldAdapter implements IFieldAdapter
 {

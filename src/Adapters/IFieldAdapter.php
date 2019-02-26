@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\Adapters;
+namespace Nettrine\Hydrator\Adapters;
 
-use Nettrine\DoctrineHydration\Arguments\FieldArgs;
+use Nettrine\Hydrator\Arguments\FieldArgs;
 
 interface IFieldAdapter
 {

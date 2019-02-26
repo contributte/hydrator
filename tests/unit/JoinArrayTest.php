@@ -1,9 +1,9 @@
 <?php
 
-use Nettrine\DoctrineHydration\Adapters\JoinArrayAdapter;
-use Nettrine\DoctrineHydration\Factories\MetadataFactory;
-use Nettrine\DoctrineHydration\Hydration;
-use Nettrine\DoctrineHydration\PropertyAccessor;
+use Nettrine\Hydrator\Adapters\JoinArrayAdapter;
+use Nettrine\Hydrator\Factories\MetadataFactory;
+use Nettrine\Hydrator\Hydration;
+use Nettrine\Hydrator\PropertyAccessor;
 
 class JoinArrayTest extends \Codeception\Test\Unit
 {

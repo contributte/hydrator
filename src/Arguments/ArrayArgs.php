@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\Arguments;
+namespace Nettrine\Hydrator\Arguments;
 
-use Nettrine\DoctrineHydration\Metadata;
+use Nettrine\Hydrator\Metadata;
 use Prowebcraft\Dot;
 
 /**

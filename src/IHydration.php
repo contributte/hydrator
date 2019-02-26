@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration;
+namespace Nettrine\Hydrator;
 
-use Nettrine\DoctrineHydration\Adapters\IArrayAdapter;
-use Nettrine\DoctrineHydration\Adapters\IFieldAdapter;
+use Nettrine\Hydrator\Adapters\IArrayAdapter;
+use Nettrine\Hydrator\Adapters\IFieldAdapter;
 
 interface IHydration
 {

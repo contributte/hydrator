@@ -1,10 +1,10 @@
 <?php
 
 use Doctrine\ORM\EntityManagerInterface;
-use Nettrine\DoctrineHydration\Adapters\TargetEntityFieldAdapter;
-use Nettrine\DoctrineHydration\Arguments\FieldArgs;
-use Nettrine\DoctrineHydration\Factories\MetadataFactory;
-use Nettrine\DoctrineHydration\Hydration;
+use Nettrine\Hydrator\Adapters\TargetEntityFieldAdapter;
+use Nettrine\Hydrator\Arguments\FieldArgs;
+use Nettrine\Hydrator\Factories\MetadataFactory;
+use Nettrine\Hydrator\Hydration;
 use Nettrine\Test\Helpers;
 
 class TargetEntityFieldTest extends \Codeception\Test\Unit

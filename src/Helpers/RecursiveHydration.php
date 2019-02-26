@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Nettrine\DoctrineHydration\Helpers;
+namespace Nettrine\Hydrator\Helpers;
 
 use Nette\SmartObject;
 

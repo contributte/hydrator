@@ -1,6 +1,6 @@
 <?php
 
-use Nettrine\DoctrineHydration\PropertyAccessor;
+use Nettrine\Hydrator\PropertyAccessor;
 use Nettrine\Test\SettersGetters;
 
 class PropertyAccessorTest extends \Codeception\Test\Unit

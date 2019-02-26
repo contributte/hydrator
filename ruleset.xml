@@ -7,7 +7,7 @@
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
         <properties>
             <property name="rootNamespaces" type="array" value="
-                src=>Nettrine\DoctrineHydration
+                src=>Nettrine\Hydrator
             "/>
         </properties>
     </rule>
