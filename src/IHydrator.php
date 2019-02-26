@@ -5,7 +5,7 @@ namespace Nettrine\Hydrator;
 use Nettrine\Hydrator\Adapters\IArrayAdapter;
 use Nettrine\Hydrator\Adapters\IFieldAdapter;
 
-interface IHydration
+interface IHydrator
 {
 
 	/**

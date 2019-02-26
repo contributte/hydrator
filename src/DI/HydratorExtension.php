@@ -7,8 +7,8 @@ use Nettrine\Hydrator\Adapters\IArrayAdapter;
 use Nettrine\Hydrator\Adapters\IFieldAdapter;
 use Nettrine\Hydrator\Factories\IMetadataFactory;
 use Nettrine\Hydrator\Factories\MetadataFactory;
-use Nettrine\Hydrator\Hydration;
-use Nettrine\Hydrator\IHydration;
+use Nettrine\Hydrator\Hydrator;
+use Nettrine\Hydrator\IHydrator;
 use Nettrine\Hydrator\IPropertyAccessor;
 use Nettrine\Hydrator\PropertyAccessor;
 
@@ -30,8 +30,8 @@ class HydratorExtension extends CompilerExtension
 		$config = $this->validateConfig($this->defaults);
 
 		$hydration = $builder->addDefinition($this->prefix('hydration'))
-			->setType(IHydration::class)
-			->setFactory(Hydration::class);
+			->setType(IHydrator::class)
+			->setFactory(Hydrator::class);
 
 		$builder->addDefinition($this->prefix('metadataFactory'))
 			->setType(IMetadataFactory::class)

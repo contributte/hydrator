@@ -10,7 +10,7 @@ use Nettrine\Hydrator\Arguments\FieldArgs;
 use Nettrine\Hydrator\Factories\IMetadataFactory;
 use Nettrine\Hydrator\Helpers\RecursiveHydration;
 
-class Hydration implements IHydration
+class Hydrator implements IHydrator
 {
 
 	use SmartObject;
@@ -70,7 +70,7 @@ class Hydration implements IHydration
 	 * @param string|object $object
 	 * @param mixed[] $values
 	 * @param mixed[] $settings
-	 * @throws HydrationException
+	 * @throws HydratorException
 	 * @throws PropertyAccessException
 	 */
 	public function toFields($object, iterable $values, array $settings = []): object
@@ -92,7 +92,7 @@ class Hydration implements IHydration
 						if ($optional) {
 							$args[] = $default;
 						} else {
-							HydrationException::valueNotExists($field);
+							HydratorException::valueNotExists($field);
 						}
 					}
 				}

@@ -12,12 +12,12 @@ extensions:
 ## Základní použití
 
 ```php
-$entity = $hydration->toFields(Entity::class, [
+$entity = $hydrator->toFields(Entity::class, [
 	'name' => 'foo',
 	'field' => 'value',
 ]);
 
-$entity = $hydration->toFields($entityObj, [
+$entity = $hydrator->toFields($entityObj, [
 	'name' => 'foo',
 	'field' => 'value',
 ]);
@@ -26,7 +26,7 @@ $entity = $hydration->toFields($entityObj, [
 ## Entity na pole
 
 ```php
-$array = $hydration->toArray($entity);
+$array = $hydrator->toArray($entity);
 ```
 
 ## Vlastní ArrayAccessor
@@ -91,7 +91,7 @@ $entity = new Assoc class {
 
 $entity->assoc->id++;
 
-$array = $hydration->toArray($entity);
+$array = $hydrator->toArray($entity);
 
 $array === [
 	'id' => 42,
@@ -116,7 +116,7 @@ $entity = new Assoc class {
 
 $entity->assoc->id++;
 
-$array = $hydration->toArray($entity, [
+$array = $hydrator->toArray($entity, [
 	'joins' => [
 		'assoc' => 'foo'
 	]
@@ -137,7 +137,7 @@ Implementují rozhraní IFieldAdapter. Vestavěné adaptéry:
 Můžeme použít vlastní callback na pole:
 
 ```php
-$hydration->toFields($obj, [
+$hydrator->toFields($obj, [
 	'name' => 'foo',
 ], [
 	'callbacks' => [
@@ -154,7 +154,7 @@ Hodnota property $name bude nyní Foo.
 Pokud se jedná o asociaci, tak se najde entita:
 
 ```php
-$hydration->toFields($obj, [
+$hydrator->toFields($obj, [
 	'assoc' => 42, // najde se položka s hodnotou 42
 ]);
 ```
@@ -179,7 +179,6 @@ class CustomFieldAdapter implements IFieldAdapter {
 
 	public function isWorkable(FieldArgs $args): bool {
 		// funguj jen když typ je image a není asociace
-		return 
 		return !$args->metadata->isAssociation($field) && $args->metadata->getFieldMapping($field)['type'] === 'image';
 	}
 
@@ -209,7 +208,7 @@ hydrator:
 Použití:
 
 ```php
-$hydration->toFields($obj, [
+$hydrator->toFields($obj, [
 	'avatar' => __DIR__ . '/avatar.png',
 ], [
 	'images' => [

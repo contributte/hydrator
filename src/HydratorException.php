@@ -4,12 +4,12 @@ namespace Nettrine\Hydrator;
 
 use Exception;
 
-class HydrationException extends Exception
+class HydratorException extends Exception
 {
 
 	/**
 	 * @param mixed $object
-	 * @throws HydrationException
+	 * @throws HydratorException
 	 */
 	public static function checkObject($object): void
 	{
@@ -19,7 +19,7 @@ class HydrationException extends Exception
 	}
 
 	/**
-	 * @throws HydrationException
+	 * @throws HydratorException
 	 */
 	public static function valueNotExists(string $name): void
 	{
@@ -27,7 +27,7 @@ class HydrationException extends Exception
 	}
 
 	/**
-	 * @throws HydrationException
+	 * @throws HydratorException
 	 */
 	public static function cannotInjectParameter(string $name): void
 	{
@@ -35,7 +35,7 @@ class HydrationException extends Exception
 	}
 
 	/**
-	 * @throws HydrationException
+	 * @throws HydratorException
 	 */
 	public static function cannotGetParameter(string $name): void
 	{

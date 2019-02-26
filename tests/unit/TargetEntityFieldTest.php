@@ -4,7 +4,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Nettrine\Hydrator\Adapters\TargetEntityFieldAdapter;
 use Nettrine\Hydrator\Arguments\FieldArgs;
 use Nettrine\Hydrator\Factories\MetadataFactory;
-use Nettrine\Hydrator\Hydration;
+use Nettrine\Hydrator\Hydrator;
 use Nettrine\Test\Helpers;
 
 class TargetEntityFieldTest extends \Codeception\Test\Unit
@@ -16,7 +16,7 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit
 	protected $tester;
 
 	/**
-	 * @var Hydration
+	 * @var Hydrator
 	 */
 	protected $hydrator;
 
@@ -29,7 +29,7 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit
 	protected function _before()
 	{
 		$this->em = $em = $this->getModule('\Helper\Unit')->createEntityManager();
-		$this->hydrator = new Hydration(new MetadataFactory($em));
+		$this->hydrator = new Hydrator(new MetadataFactory($em));
 		$this->hydrator->addFieldAdapter(new class($em, $this) extends TargetEntityFieldAdapter
 		{
 

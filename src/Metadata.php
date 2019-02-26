@@ -56,7 +56,7 @@ class Metadata
 
 	/**
 	 * @return mixed[]
-	 * @throws HydrationException
+	 * @throws HydratorException
 	 */
 	public function getMapping(string $field): array
 	{
@@ -67,7 +67,7 @@ class Metadata
 			return $this->metadata->associationMappings[$field];
 		}
 
-		throw new HydrationException(sprintf('Field %s not exists in %s', $field, $this->metadata->getName()));
+		throw new HydratorException(sprintf('Field %s not exists in %s', $field, $this->metadata->getName()));
 	}
 
 	/**

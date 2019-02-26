@@ -1,7 +1,7 @@
 <?php
 
 use Nettrine\Hydrator\Factories\MetadataFactory;
-use Nettrine\Hydrator\Hydration;
+use Nettrine\Hydrator\Hydrator;
 
 class FieldsTest extends \Codeception\Test\Unit
 {
@@ -12,14 +12,14 @@ class FieldsTest extends \Codeception\Test\Unit
 	protected $tester;
 
 	/**
-	 * @var Hydration
+	 * @var Hydrator
 	 */
 	protected $hydrator;
 
 	protected function _before()
 	{
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
-		$this->hydrator = new Hydration(new MetadataFactory($em));
+		$this->hydrator = new Hydrator(new MetadataFactory($em));
 	}
 
 	protected function _after()

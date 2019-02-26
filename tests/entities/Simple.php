@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-use Nettrine\Hydrator\TMagicHydration;
+use Nettrine\Hydrator\TMagicHydrator;
 
 /**
  * @Entity()
@@ -8,7 +8,7 @@ use Nettrine\Hydrator\TMagicHydration;
 class Simple
 {
 
-	use TMagicHydration;
+	use TMagicHydrator;
 
 	/**
 	 * @var int

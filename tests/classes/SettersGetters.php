@@ -2,12 +2,12 @@
 
 namespace Nettrine\Test;
 
-use Nettrine\Hydrator\TMagicHydration;
+use Nettrine\Hydrator\TMagicHydrator;
 
 class SettersGetters
 {
 
-	use TMagicHydration;
+	use TMagicHydrator;
 
 	private $foo = 'foo';
 

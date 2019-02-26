@@ -2,7 +2,7 @@
 
 namespace Nettrine\Hydrator;
 
-trait TMagicHydration
+trait TMagicHydrator
 {
 
 	/**

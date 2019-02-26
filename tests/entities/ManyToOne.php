@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 use Doctrine\ORM\Mapping as ORM;
-use Nettrine\Hydrator\TMagicHydration;
+use Nettrine\Hydrator\TMagicHydrator;
 
 /**
  * @Entity()
@@ -9,7 +9,7 @@ use Nettrine\Hydrator\TMagicHydration;
 class ManyToOne
 {
 
-	use TMagicHydration;
+	use TMagicHydrator;
 
 	/**
 	 * @var int

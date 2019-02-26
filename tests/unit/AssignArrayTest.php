@@ -2,7 +2,7 @@
 
 use Nettrine\Hydrator\Adapters\AssignArrayAdapter;
 use Nettrine\Hydrator\Factories\MetadataFactory;
-use Nettrine\Hydrator\Hydration;
+use Nettrine\Hydrator\Hydrator;
 
 class AssignArrayTest extends \Codeception\Test\Unit
 {
@@ -13,14 +13,14 @@ class AssignArrayTest extends \Codeception\Test\Unit
 	protected $tester;
 
 	/**
-	 * @var Hydration
+	 * @var Hydrator
 	 */
 	protected $hydrator;
 
 	protected function _before()
 	{
 		$em = $this->getModule('\Helper\Unit')->createEntityManager();
-		$this->hydrator = new Hydration(new MetadataFactory($em));
+		$this->hydrator = new Hydrator(new MetadataFactory($em));
 		$this->hydrator->addArrayAdapter(new AssignArrayAdapter());
 	}
 
