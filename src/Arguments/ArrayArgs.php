@@ -47,7 +47,8 @@ final class ArrayArgs extends BaseArgs
 		return $this;
 	}
 
-	public function unsetValue(?string $field = null): self {
+	public function unsetValue(?string $field = null): self
+	{
 		if ($field) {
 			Dot::deleteValue($this->values, $field);
 		} else {

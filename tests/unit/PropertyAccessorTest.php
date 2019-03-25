@@ -29,4 +29,5 @@ class PropertyAccessorTest extends \Codeception\Test\Unit
 		$this->assertSame(true, $accessor->get($obj, 'bool'));
 		$this->assertSame('bar', $accessor->get($obj, 'bar'));
 	}
+
 }

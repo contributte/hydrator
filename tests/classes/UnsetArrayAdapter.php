@@ -5,13 +5,16 @@ namespace Nettrine\Test;
 use Nettrine\Hydrator\Adapters\IArrayAdapter;
 use Nettrine\Hydrator\Arguments\ArrayArgs;
 
-final class UnsetArrayAdapter implements IArrayAdapter {
+final class UnsetArrayAdapter implements IArrayAdapter
+{
 
-	public function isWorkable(ArrayArgs $args): bool {
+	public function isWorkable(ArrayArgs $args): bool
+	{
 		return $args->hasSettingsSection('unset');
 	}
 
-	public function work(ArrayArgs $args): void {
+	public function work(ArrayArgs $args): void
+	{
 		$args->unsetValue();
 	}
 

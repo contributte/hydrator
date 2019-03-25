@@ -47,4 +47,5 @@ class AssignArrayTest extends \Codeception\Test\Unit
 			'nullable' => null,
 		], $array);
 	}
+
 }

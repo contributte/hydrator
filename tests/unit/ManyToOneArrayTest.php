@@ -42,4 +42,5 @@ class ManyToOneArrayTest extends \Codeception\Test\Unit
 			'simple' => 1,
 		], $array);
 	}
+
 }

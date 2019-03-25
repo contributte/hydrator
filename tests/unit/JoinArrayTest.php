@@ -47,4 +47,5 @@ class JoinArrayTest extends \Codeception\Test\Unit
 			'simple' => 'foo',
 		], $array);
 	}
+
 }

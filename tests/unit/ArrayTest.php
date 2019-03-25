@@ -63,7 +63,7 @@ class ArrayTest extends \Codeception\Test\Unit
 		], $this->hydrator->toArray($obj, [
 			'unset' => [
 				'nullable' => true,
-			]
+			],
 		]));
 	}
 

@@ -66,4 +66,5 @@ class FieldsTest extends \Codeception\Test\Unit
 		$this->assertSame('bar', $this->getField($obj, 'position'));
 		$this->assertSame(15, $this->getField($obj, 'nullable'));
 	}
+
 }

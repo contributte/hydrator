@@ -4,7 +4,7 @@ namespace Nettrine\Test;
 
 use Nettrine\Hydrator\TMagicHydrator;
 
-class SettersGetters
+final class SettersGetters
 {
 
 	use TMagicHydrator;
