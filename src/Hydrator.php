@@ -132,6 +132,8 @@ class Hydrator implements IHydrator
 				if ($value instanceof RecursiveHydration) {
 					$value = $this->toFields($value->getObject(), $value->getValues(), $value->getSettings());
 				}
+
+				break;
 			}
 		}
 
