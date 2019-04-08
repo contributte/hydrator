@@ -14,7 +14,7 @@ class CallbackFieldAdapter implements IFieldAdapter
 
 	public function work(FieldArgs $args): void
 	{
-		$args->value = $args->getSettingsSection('callbacks')($args->value, $args);
+		$args->getSettingsSection('callbacks')($args);
 	}
 
 }

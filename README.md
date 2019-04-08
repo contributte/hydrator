@@ -141,8 +141,8 @@ $hydrator->toFields($obj, [
 	'name' => 'foo',
 ], [
 	'callbacks' => [
-		'name' => function ($value) {
-			return ucfirst($value);
+		'name' => function (FieldArgs $args) {
+		    $args->value = ucfirst($args->value);
 		},
 	] 
 ]);

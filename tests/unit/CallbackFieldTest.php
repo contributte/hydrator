@@ -1,6 +1,7 @@
 <?php
 
 use Nettrine\Hydrator\Adapters\CallbackFieldAdapter;
+use Nettrine\Hydrator\Arguments\FieldArgs;
 use Nettrine\Hydrator\Factories\MetadataFactory;
 use Nettrine\Hydrator\Hydrator;
 use Nettrine\Hydrator\SkipValueException;
@@ -39,10 +40,10 @@ class CallbackFieldTest extends \Codeception\Test\Unit
 			'nullable' => 15,
 		], [
 			'callbacks' => [
-				'name' => function ($value) {
-					$this->assertSame('foo', $value);
+				'name' => function (FieldArgs $args) {
+					$this->assertSame('foo', $args->value);
 
-					return 'bar';
+					$args->value = 'bar';
 				},
 			],
 		]);
