@@ -2,6 +2,7 @@
 
 namespace Nettrine\Hydrator\Arguments;
 
+use Nettrine\Hydrator\IHydrator;
 use Nettrine\Hydrator\Metadata;
 use Prowebcraft\Dot;
 
@@ -22,9 +23,9 @@ final class ArrayArgs extends BaseArgs
 	 * @param mixed $value
 	 * @param mixed[] $settings
 	 */
-	public function __construct(array &$values, object $object, $value, string $field, Metadata $metadata, array $settings)
+	public function __construct(IHydrator $hydrator, array &$values, object $object, $value, string $field, Metadata $metadata, array $settings)
 	{
-		parent::__construct($metadata, $value, $field, $settings);
+		parent::__construct($hydrator, $metadata, $value, $field, $settings);
 
 		$this->object = $object;
 		$this->values = &$values;

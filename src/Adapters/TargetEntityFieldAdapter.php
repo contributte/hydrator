@@ -3,6 +3,7 @@
 namespace Nettrine\Hydrator\Adapters;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Nettrine\Hydrator\Arguments\FieldArgs;
 use Nettrine\Hydrator\Helpers\RecursiveHydration;
 
@@ -24,7 +25,8 @@ class TargetEntityFieldAdapter implements IFieldAdapter
 
 	public function work(FieldArgs $args): void
 	{
-		$targetEntity = $args->metadata->getMapping($args->field)['targetEntity'];
+		$mapping = $args->metadata->getMapping($args->field);
+		$targetEntity = $mapping['targetEntity'];
 
 		if ($args->value instanceof $targetEntity) {
 			return;
@@ -34,7 +36,7 @@ class TargetEntityFieldAdapter implements IFieldAdapter
 		}
 		if (is_array($args->value)) {
 			// TODO: settings
-			$args->value = new RecursiveHydration($targetEntity, $args->value);
+			$args->value = $args->hydrateToFields($targetEntity, $args->value);
 			return;
 		}
 

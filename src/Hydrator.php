@@ -8,7 +8,6 @@ use Nettrine\Hydrator\Adapters\IFieldAdapter;
 use Nettrine\Hydrator\Arguments\ArrayArgs;
 use Nettrine\Hydrator\Arguments\FieldArgs;
 use Nettrine\Hydrator\Factories\IMetadataFactory;
-use Nettrine\Hydrator\Helpers\RecursiveHydration;
 
 class Hydrator implements IHydrator
 {
@@ -124,7 +123,7 @@ class Hydrator implements IHydrator
 	{
 		$value = $values[$field];
 		foreach ($this->fieldAdapters as $adapter) {
-			$args = new FieldArgs($object, $field, $values, $metadata, $settings);
+			$args = new FieldArgs($this, $object, $field, $values, $metadata, $settings);
 			if ($adapter->isWorkable($args)) {
 				$adapter->work($args);
 				$value = $args->value;
@@ -149,7 +148,7 @@ class Hydrator implements IHydrator
 	{
 		$values[$field] = $value;
 		foreach ($this->arrayAdapters as $adapter) {
-			$args = new ArrayArgs($values, $object, $value, $field, $metadata, $settings);
+			$args = new ArrayArgs($this, $values, $object, $value, $field, $metadata, $settings);
 			if ($adapter->isWorkable($args)) {
 				$adapter->work($args);
 

@@ -2,6 +2,7 @@
 
 namespace Nettrine\Hydrator\Arguments;
 
+use Nettrine\Hydrator\IHydrator;
 use Nettrine\Hydrator\Metadata;
 
 /**
@@ -22,9 +23,9 @@ final class FieldArgs extends BaseArgs
 	 * @param mixed[] $values
 	 * @param mixed[] $settings
 	 */
-	public function __construct(?object $object, string $field, array $values, Metadata $metadata, array $settings)
+	public function __construct(IHydrator $hydrator, ?object $object, string $field, array $values, Metadata $metadata, array $settings)
 	{
-		parent::__construct($metadata, $values[$field], $field, $settings);
+		parent::__construct($hydrator, $metadata, $values[$field], $field, $settings);
 
 		$this->object = $object;
 		$this->values = $values;

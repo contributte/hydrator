@@ -3,6 +3,7 @@
 namespace Nettrine\Hydrator\Arguments;
 
 use Nette\SmartObject;
+use Nettrine\Hydrator\IHydrator;
 use Nettrine\Hydrator\Metadata;
 
 /**
@@ -25,6 +26,9 @@ abstract class BaseArgs
 	/** @var string[] */
 	protected $setters = [];
 
+	/** @var IHydrator */
+	private $hydrator;
+
 	/** @var Metadata */
 	protected $metadata;
 
@@ -41,12 +45,32 @@ abstract class BaseArgs
 	 * @param mixed $value
 	 * @param mixed[] $settings
 	 */
-	public function __construct(Metadata $metadata, $value, string $field, array $settings)
+	public function __construct(IHydrator $hydrator, Metadata $metadata, $value, string $field, array $settings)
 	{
+		$this->hydrator = $hydrator;
 		$this->metadata = $metadata;
 		$this->settings = $settings;
 		$this->field = $field;
 		$this->value = $value;
+	}
+
+	/**
+	 * @param string|object $object
+	 * @param mixed[] $values
+	 * @param mixed[] $settings
+	 */
+	public function hydrateToFields($object, iterable $values, array $settings = []): object
+	{
+		return $this->hydrator->toFields($object, $values, $settings);
+	}
+
+	/**
+	 * @param mixed[] $settings
+	 * @return mixed[]
+	 */
+	public function hydrateToArray(object $object, array $settings = []): array
+	{
+		return $this->hydrator->toArray($object, $settings);
 	}
 
 	public function hasSettingsSection(string $section): bool
