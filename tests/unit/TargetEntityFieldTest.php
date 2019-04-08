@@ -67,6 +67,16 @@ class TargetEntityFieldTest extends \Codeception\Test\Unit
 		$this->assertSame($obj->getSimple(), $this->obj);
 	}
 
+	public function testManyToMany()
+	{
+		/** @var ManyToMany $obj */
+		$this->hydrator->toFields(ManyToMany::class, [
+			'simples' => 'foo'
+		]);
+
+		$this->assertNull($this->called);
+	}
+
 	public function testArray()
 	{
 		Helpers::resetProperty($this->hydrator, 'fieldAdapters', []);

@@ -5,7 +5,6 @@ namespace Nettrine\Hydrator\Adapters;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Nettrine\Hydrator\Arguments\FieldArgs;
-use Nettrine\Hydrator\Helpers\RecursiveHydration;
 
 class TargetEntityFieldAdapter implements IFieldAdapter
 {
@@ -20,7 +19,9 @@ class TargetEntityFieldAdapter implements IFieldAdapter
 
 	public function isWorkable(FieldArgs $args): bool
 	{
-		return isset($args->metadata->getMapping($args->field)['targetEntity']);
+		$mapping = $args->metadata->getMapping($args->field);
+
+		return isset($mapping['targetEntity']) && $mapping['type'] !== ClassMetadataInfo::MANY_TO_MANY;
 	}
 
 	public function work(FieldArgs $args): void
