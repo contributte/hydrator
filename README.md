@@ -1,15 +1,15 @@
-## Entity to array and conversely
+## Convert entity to an array and back
 
 [![Build Status](https://travis-ci.org/Nettrine/hydrator.svg?branch=master)](https://travis-ci.org/Nettrine/hydrator)
 
-## Nette instalace
+## Nette installation
 
 ```yaml
 extensions:
     hydrator: Nettrine\Hydrator\DI\HydratorExtension
 ```
 
-## Základní použití
+## Basic usage
 
 ```php
 $entity = $hydrator->toFields(Entity::class, [
@@ -23,15 +23,15 @@ $entity = $hydrator->toFields($entityObj, [
 ]);
 ```
 
-## Entity na pole
+## Entity to an array
 
 ```php
 $array = $hydrator->toArray($entity);
 ```
 
-## Vlastní ArrayAccessor
+## Custom ArrayAccessor
 
-Slouží k získání hodnoty z objektu nebo zapsání hodnoty do objektu.
+Used to read from or write to an object's property.
 
 ```php
 class CustomPropertyAccessor implements IPropertyAccessor {
@@ -43,20 +43,19 @@ class CustomPropertyAccessor implements IPropertyAccessor {
 }
 ```
 
-Nette registrace:
+Nette registration:
 ```yaml
 hydrator:
     propertyAccessor: CustomPropertyAccessor
 ```
 
-## Adaptéry
+## Adapters
 
-Máte vlastní pravidla pro získání nebo zapsání hodnoty do objektu? Nebo vám nestačí současná
-funkcionalita? Můžete je rozšířit přes adaptery. 
+Do you have custom rules of getting or setting an object's value? The existing features don't suit your needs? Adapters can be used to extend the functionality.
 
-Všechny adaptéry se musí zaregistrovat přes addFieldAdapter nebo addArrayAdapter metody.
+All the adapters have to be registered via `addFieldAdapter` or `addArrayAdapter` methods.
 
-V nette:
+In Nette:
 
 ```yaml
 hydrator:
@@ -72,10 +71,11 @@ hydrator:
 
 ### ArrayAdapter
 
-Implementují rozhraní IArrayAdapter. Vestavěné adaptéry:
+`IArrayAdapter` interface is implemented. Built-in adapters:
 
 #### ManyToOneArrayAdapter
-Všechny objektové asociace převede na ID.
+
+All object relations are converted to an ID.
 
 ```php
 $entity = new Assoc class {
@@ -100,7 +100,8 @@ $array === [
 ```
 
 #### JoinArrayAdapter
-Objektovou asociaci převede na dané pole
+
+Object association is converted to an array.
 
 ```php
 $entity = new Assoc class {
@@ -130,11 +131,11 @@ $array === [
 
 ### FieldAdapter
 
-Implementují rozhraní IFieldAdapter. Vestavěné adaptéry:
-
+`IFieldAdapter` interface is implemented. Built-in adapters:
 
 #### CallbackFieldAdapter
-Můžeme použít vlastní callback na pole:
+
+A callback can be used:
 
 ```php
 $hydrator->toFields($obj, [
@@ -148,20 +149,21 @@ $hydrator->toFields($obj, [
 ]);
 ```
 
-Hodnota property $name bude nyní Foo.
+The value of the `$name` property is now `Foo`.
 
 #### TargetEntityFieldAdapter
-Pokud se jedná o asociaci, tak se najde entita:
+
+In case of an association the corresponding entity will be found:
 
 ```php
 $hydrator->toFields($obj, [
-	'assoc' => 42, // najde se položka s hodnotou 42
+	'assoc' => 42, // Item with the value of 42 will be found
 ]);
 ```
 
-### Tvorba vlastního adapteru
+### Creating a custom adapter
 
-Máme svojí anotaci image 
+Say we have the following `image` custom type annotation:
 
 ```php
 /**
@@ -169,7 +171,7 @@ Máme svojí anotaci image
  */
 ```
 
-a chceme automaticky ukládat obrázky při hydrataci
+and we want to automatically save the image during hydration:
 
 ```php
 
@@ -178,7 +180,7 @@ class CustomFieldAdapter implements IFieldAdapter {
 	public function __construct(IImageStorage $storage) { ... }
 
 	public function isWorkable(FieldArgs $args): bool {
-		// funguj jen když typ je image a není asociace
+		// Apply only when the type is `image` and it is not an assocation
 		return !$args->metadata->isAssociation($field) && $args->metadata->getFieldMapping($field)['type'] === 'image';
 	}
 
@@ -196,7 +198,7 @@ class CustomFieldAdapter implements IFieldAdapter {
 
 ```
 
-Registrace v nette:
+Registration in Nette:
 
 ```yaml
 hydrator:
@@ -205,7 +207,7 @@ hydrator:
             - CustomFieldAdapter
 ```
 
-Použití:
+Usage:
 
 ```php
 $hydrator->toFields($obj, [
