@@ -1,6 +1,6 @@
 {
 	"name": "nettrine/hydrator",
-	"description": "",
+	"description": "Convert Doctrine entity to array and conversely",
 	"type": "library",
 	"require": {
 		"php": ">= 7.2",
@@ -21,9 +21,10 @@
 	"require-dev": {
 		"ninjify/qa": "^0.8.0",
 		"ninjify/nunjuck": "^0.2.0",
-		"phpstan/phpstan": "^0.11.0",
 		"codeception/codeception": "^2.5",
-		"nette/di": "^3.0"
+		"nette/di": "^3.0",
+		"phpstan/phpstan": "^0.12",
+		"phpstan/phpstan-deprecation-rules": "^0.12"
 	},
 	"minimum-stability": "RC"
 }
