@@ -1,15 +1,36 @@
-## Convert entity to an array and back
+![](https://heatbadger.now.sh/github/readme/contributte/hydrator/?deprecated=1)
 
-[![Build Status](https://travis-ci.org/Nettrine/hydrator.svg?branch=master)](https://travis-ci.org/Nettrine/hydrator)
+<p align=center>
+    <a href="https://bit.ly/ctteg"><img src="https://badgen.net/badge/support/gitter/cyan"></a>
+    <a href="https://bit.ly/cttfo"><img src="https://badgen.net/badge/support/forum/yellow"></a>
+    <a href="https://contributte.org/partners.html"><img src="https://badgen.net/badge/sponsor/donations/F96854"></a>
+</p>
 
-## Nette installation
+<p align=center>
+    Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
+</p>
 
-```yaml
+## Disclaimer
+
+| :warning: | This project is no longer being maintained.
+|---|---|
+
+| Composer | [`contributte/hydrator`](https://packagist.org/packages/contributte/hydrator) |
+|---| --- |
+| Version | ![](https://badgen.net/packagist/v/contributte/hydrator) |
+| PHP | ![](https://badgen.net/packagist/php/contributte/hydrator) |
+| License | ![](https://badgen.net/github/license/contributte/hydrator) |
+
+## Usage
+
+### Nette installation
+
+```mneon
 extensions:
     hydrator: Nettrine\Hydrator\DI\HydratorExtension
 ```
 
-## Basic usage
+### Basic usage
 
 ```php
 $entity = $hydrator->toFields(Entity::class, [
@@ -23,13 +44,13 @@ $entity = $hydrator->toFields($entityObj, [
 ]);
 ```
 
-## Entity to an array
+### Entity to an array
 
 ```php
 $array = $hydrator->toArray($entity);
 ```
 
-## Custom ArrayAccessor
+### Custom ArrayAccessor
 
 Used to read from or write to an object's property.
 
@@ -44,12 +65,12 @@ class CustomPropertyAccessor implements IPropertyAccessor {
 ```
 
 Nette registration:
-```yaml
+```neon
 hydrator:
     propertyAccessor: CustomPropertyAccessor
 ```
 
-## Adapters
+### Adapters
 
 Do you have custom rules of getting or setting an object's value? The existing features don't suit your needs? Adapters can be used to extend the functionality.
 
@@ -57,7 +78,7 @@ All the adapters have to be registered via `addFieldAdapter` or `addArrayAdapter
 
 In Nette:
 
-```yaml
+```neon
 hydrator:
     adapters:
         fields:
@@ -69,11 +90,11 @@ hydrator:
 
 ```
 
-### ArrayAdapter
+#### ArrayAdapter
 
 `IArrayAdapter` interface is implemented. Built-in adapters:
 
-#### ManyToOneArrayAdapter
+##### ManyToOneArrayAdapter
 
 All object relations are converted to an ID.
 
@@ -99,7 +120,7 @@ $array === [
 ];
 ```
 
-#### JoinArrayAdapter
+##### JoinArrayAdapter
 
 Object association is converted to an array.
 
@@ -129,11 +150,11 @@ $array === [
 ];
 ```
 
-### FieldAdapter
+#### FieldAdapter
 
 `IFieldAdapter` interface is implemented. Built-in adapters:
 
-#### CallbackFieldAdapter
+##### CallbackFieldAdapter
 
 A callback can be used:
 
@@ -151,7 +172,7 @@ $hydrator->toFields($obj, [
 
 The value of the `$name` property is now `Foo`.
 
-#### TargetEntityFieldAdapter
+##### TargetEntityFieldAdapter
 
 In case of an association the corresponding entity will be found:
 
@@ -161,7 +182,7 @@ $hydrator->toFields($obj, [
 ]);
 ```
 
-### Creating a custom adapter
+#### Creating a custom adapter
 
 Say we have the following `image` custom type annotation:
 
@@ -200,7 +221,7 @@ class CustomFieldAdapter implements IFieldAdapter {
 
 Registration in Nette:
 
-```yaml
+```neon
 hydrator:
     adapters:
         fields: 
@@ -218,3 +239,20 @@ $hydrator->toFields($obj, [
 	]
 ]);
 ```
+
+## Development
+
+This package was maintain by these authors.
+
+<a href="https://github.com/f3l1x">
+  <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
+</a>
+
+<a href="https://github.com/Gappa">
+  <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/749981?v=3&s=80">
+</a>
+
+-----
+
+Consider to [support](https://contributte.org/partners.html) **contributte** development team.
+Also thank you for being used this package.
