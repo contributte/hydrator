@@ -15,10 +15,10 @@
 | :warning: | This project is no longer being maintained.
 |---|---|
 
-| Composer | [`contributte/hydrator`](https://packagist.org/packages/contributte/hydrator) |
+| Composer | [`nettrine/hydrator`](https://packagist.org/packages/nettrine/hydrator) |
 |---| --- |
-| Version | ![](https://badgen.net/packagist/v/contributte/hydrator) |
-| PHP | ![](https://badgen.net/packagist/php/contributte/hydrator) |
+| Version | ![](https://badgen.net/packagist/v/nettrine/hydrator) |
+| PHP | ![](https://badgen.net/packagist/php/nettrine/hydrator) |
 | License | ![](https://badgen.net/github/license/contributte/hydrator) |
 
 ## Usage
