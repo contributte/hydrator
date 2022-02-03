@@ -25,7 +25,7 @@
 
 ### Nette installation
 
-```mneon
+```neon
 extensions:
     hydrator: Nettrine\Hydrator\DI\HydratorExtension
 ```
